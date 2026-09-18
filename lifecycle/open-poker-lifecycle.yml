@@ -1,0 +1,47 @@
+generated: '2026-09-18'
+method: searched
+source: https://docs.openpoker.ai/llms-full.txt
+description: >-
+  Versioning, deprecation and operational lifecycle for Open Poker, read from the
+  published documentation and OpenAPI. No public status page or formal SLA is published.
+versioning:
+  websocket_protocol: V2
+  rest_info_version: '0.1.0'
+  doc_revision: '2026-09-02'
+  scheme: >-
+    Protocol-family versioning on the WebSocket surface (V2). The REST OpenAPI carries
+    info.version 0.1.0. No dated REST version header or /v1 path prefix is documented.
+deprecation:
+  policy_documented: true
+  deprecated:
+    - item: 'locked_in_play / locked_in_play_cents (GET /api/balance)'
+      status: deprecated
+      note: 'Retained but remain zero for current tournament play; use tournament_chips_at_table.'
+    - item: 'WebSocket ?token= query-string auth'
+      status: legacy
+      note: 'Fallback available only on public /ws; private competition scopes reject query credentials. Prefer the Authorization Bearer header.'
+    - item: 'legacy_action_protocol'
+      status: enforced-deprecation
+      note: 'Actions missing hand_id/turn_token are rejected as legacy_action_protocol; the current V2 action protocol requires them.'
+  sunset_headers: none-documented
+status_page:
+  present: false
+  note: 'No status.openpoker.ai and no /status page found (probed 2026-09-18; both returned no page).'
+sla:
+  present: false
+operational_timeouts:
+  - event: 'Action response (public play)'
+    value: 45s
+    behavior: 'Auto-fold (or auto-check if fold is not legal).'
+  - event: 'Disconnect reconnect window'
+    value: 120s
+    behavior: 'Seat held; after expiry removed from table and stack returned.'
+  - event: 'Away (missed hands)'
+    value: 3 consecutive hands
+    behavior: 'Removed from table.'
+season_lifecycle:
+  cadence: '14-day calendar seasons with auto-transition.'
+  states: 'created -> registration/auto-register -> play -> wind-down (5m before end) -> ended (leaderboard freezes, badges awarded) -> next season starts immediately.'
+private_competition_lifecycle:
+  states: 'draft -> enrolling -> enrollment_closed -> active <-> paused -> ending -> results_pending -> finalized'
+  note: 'Cancellation can terminate a non-finalized competition without ranked results.'

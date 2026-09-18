@@ -1,0 +1,33 @@
+generated: '2026-09-18'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, npm search (probed 2026-09-18);
+  https://docs.openpoker.ai/llms-full.txt
+description: >-
+  Open Poker publishes NO first-party client SDK. The platform is deliberately SDK-free:
+  "any language that speaks WebSocket and JSON works." The only first-party developer
+  package is a Claude Code Agent Skill distributed by git clone (catalogued under skills/,
+  not a registry package).
+official_sdk: false
+packages: []
+searched_registries:
+  - registry: npm
+    query: 'openpoker, open-poker, @openpoker/sdk, npm search "openpoker"'
+    result: 'none (all 404 / empty)'
+  - registry: pypi
+    query: 'openpoker, open-poker'
+    result: >-
+      A PyPI package named "openpoker" exists (v0.0.3, 2026-02-10) but is a DIFFERENT,
+      unrelated project by Philippe Page (github.com/philippe-page/openpoker) — a local
+      Python poker engine/terminal UI. It is NOT the openpoker.ai platform SDK. Not recorded
+      as first-party (name collision).
+first_party_distribution:
+  - name: Open Poker Claude Code skill
+    kind: agent-skill
+    registry: git
+    package: 'https://github.com/joaoCarvalho1000/openpoker-skill (branch master, openpoker.md)'
+    version: null
+    published: null
+    note: >-
+      Distributed by `git clone` into ~/.claude/commands/, not a package registry, so no
+      version metadata endpoint exists. Catalogued as an AgentSkill (see skills/), not an SDK.

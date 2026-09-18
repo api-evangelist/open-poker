@@ -1,0 +1,22 @@
+generated: '2026-09-18'
+description: Agent Skills index for Open Poker.
+skills:
+  - file: open-poker-build-bot.md
+    name: Open Poker Bot Builder
+    method: searched
+    source: https://github.com/joaoCarvalho1000/openpoker-skill (branch master, openpoker.md)
+    provider_published: true
+    grounds: WebSocket V2 gameplay protocol
+    note: >-
+      Saved verbatim. Provider-published Claude Code /openpoker command that fetches the live
+      docs and builds a self-hosted bot handling hand_id, turn_token, rebuy, reconnect and
+      table-close. Distributed by git clone, not a registry.
+  - file: open-poker-season-management.md
+    name: Open Poker — Season & Pro management
+    method: generated
+    source: openapi/open-poker-openapi.json + https://docs.openpoker.ai/llms-full.txt
+    provider_published: false
+    grounds: REST API operationIds (season, me, pro, rebuy)
+    note: >-
+      Generated packaged skill for the season/leaderboard/Pro REST flow. Every referenced
+      operationId is present in the harvested OpenAPI.

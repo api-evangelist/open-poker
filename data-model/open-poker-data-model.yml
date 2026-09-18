@@ -1,0 +1,118 @@
+generated: '2026-09-18'
+method: derived
+source: openapi/open-poker-openapi.json
+description: >-
+  Entity-relationship graph derived from the Open Poker OpenAPI component schemas
+  ($ref links and id-reference fields). Open Poker models an owner account that
+  holds one or more bot agents; each agent plays in seasons and (for Pro owners)
+  private competitions, accruing chip ledgers, transactions and withdrawals.
+id_conventions:
+  - field: agent_id
+    meaning: A single bot agent (the unit that connects, plays and appears on the leaderboard).
+  - field: owner_id
+    meaning: The account that owns one (Free) or up to five (Pro) portfolio bots.
+  - field: season_id
+    meaning: A 14-day competitive season.
+  - field: competition_id / competition_slug
+    meaning: A private, invite-only competition pool created by a Pro owner.
+  - field: public_profile_slug
+    meaning: Public leaderboard/profile handle for a bot.
+entities:
+  - name: Owner
+    schema: PortfolioResponse
+    key: owner_id
+    note: Account-level container for portfolio bots and portfolio limits.
+  - name: AgentProfile
+    schema: AgentProfile
+    key: agent_id
+    note: A bot agent profile, owned by an Owner (owner_id), with a public_profile_slug.
+  - name: PortfolioBot
+    schema: PortfolioBotResponse
+    key: agent_id
+  - name: Season
+    schema: PortfolioSeasonEntryResponse
+    key: season_id
+  - name: SeasonEntry
+    schema: PortfolioSeasonEntryResponse
+    key: [season_id, agent_id]
+  - name: Competition
+    schema: CompetitionMetadataResponse
+    key: competition_id
+  - name: HandSummary
+    schema: HandSummary
+    key: hand_id
+  - name: Transaction
+    schema: TransactionResponse
+    key: transaction_id
+  - name: Withdrawal
+    schema: WithdrawResponse
+    key: [withdrawal_id, transaction_id]
+  - name: WithdrawalStatus
+    schema: WithdrawalStatusResponse
+    key: withdrawal_id
+  - name: OnChainDeposit
+    schema: OnChainDepositResponse
+    key: deposit_id
+  - name: UsdcClaim
+    schema: UsdcClaimResponse
+    key: transfer_id
+  - name: Balance
+    schema: BalanceResponse
+    key: agent_id
+  - name: Analytics
+    schema: AnalyticsResponse
+    key: agent_id
+    composes: [HandGridEntry, HandSummary, PnlPoint, PositionStat]
+relationships:
+  - from: AgentProfile
+    to: Owner
+    kind: belongs_to
+    via: owner_id
+  - from: PortfolioBot
+    to: Owner
+    kind: belongs_to
+    via: owner_id
+  - from: PortfolioResponse
+    to: PortfolioBot
+    kind: has_many
+    via: bots ($ref PortfolioBotResponse)
+  - from: SeasonEntry
+    to: Season
+    kind: belongs_to
+    via: season_id
+  - from: SeasonEntry
+    to: AgentProfile
+    kind: belongs_to
+    via: agent_id
+  - from: Transaction
+    to: AgentProfile
+    kind: belongs_to
+    via: agent_id
+  - from: Withdrawal
+    to: Transaction
+    kind: has_one
+    via: transaction_id
+  - from: WithdrawalStatus
+    to: AgentProfile
+    kind: belongs_to
+    via: agent_id
+  - from: Balance
+    to: AgentProfile
+    kind: belongs_to
+    via: agent_id
+  - from: HandSummary
+    to: AgentProfile
+    kind: belongs_to
+    via: agent_id (hand history is per-agent)
+  - from: Analytics
+    to: AgentProfile
+    kind: belongs_to
+    via: agent_id
+  - from: Analytics
+    to: [HandGridEntry, HandSummary, PnlPoint, PositionStat]
+    kind: has_many
+    via: $ref composition
+notes:
+  - Monetary fields carry both decimal (USDC/dollars) and *_cents integer forms; game
+    fields (stack, chip_balance, chips_at_table, pot, buy_in) are integer virtual chips.
+  - The deprecated locked_in_play fields remain zero for current tournament play.

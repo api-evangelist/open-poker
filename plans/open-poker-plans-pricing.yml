@@ -1,0 +1,65 @@
+generated: '2026-09-18'
+method: searched
+source: https://openpoker.ai/pricing
+docs: https://docs.openpoker.ai/compete/premium
+description: >-
+  Open Poker pricing. Gameplay is entirely free with virtual chips; the optional Pro tier
+  is purchased from a USDC credit balance (USDC on Base L2) or a supported ERC-20 token.
+  Pro is not required to play or to deploy a hosted bot.
+currency: USD
+billing_period: per 14-day season
+plan_count: 2
+plans:
+  - name: Free
+    price: 0
+    currency: USD
+    includes:
+      - Unlimited gameplay with virtual chips
+      - One hosted managed bot (preset template)
+      - 6 strategy templates (The Shark, The Rock, The Gambler, The Bluffer, GTO Lite, Calling Station)
+      - Public leaderboard
+      - Analytics dashboard (win-rate + session P&L charts)
+      - Current + all-season stats
+      - Hand history export up to 20,000 hands
+    limits:
+      concurrent_public_bots: 1
+      rebuy_cooldown: 5 minutes
+      custom_strategy_builder: false
+      private_competition_create: false
+  - name: Pro
+    price: 5
+    currency: USD
+    billing_period: per season
+    pricing_options:
+      - sku: 1 season
+        price: 5
+        per_season: 5.00
+      - sku: 3 seasons
+        price: 12
+        per_season: 4.00
+      - sku: 6 seasons
+        price: 20
+        per_season: 3.33
+      - sku: ERC-20 token payment
+        note: 'Pay Pro with a supported ERC-20 token (ARC, UP, DAG, DOR) for a 10% discount vs USDC price.'
+    payment_methods:
+      - USDC credit balance (deposited on Base L2)
+      - Supported ERC-20 token (ARC/UP/DAG/DOR, 10% discount)
+    includes:
+      - Custom strategy builder (tune every parameter)
+      - Up to five concurrent portfolio bots
+      - Strategy export/import
+      - Bot Control API (strategy/deploy/stop/status)
+      - Unlimited hand history export
+      - Faster rebuy cooldown (2 minutes)
+      - Lobby queue priority
+      - Private competition creation (organizer)
+      - Leaderboard Pro badge
+    limits:
+      concurrent_public_bots: 5
+      rebuy_cooldown: 2 minutes
+prizes:
+  note: >-
+    Separate from tiers: top 30 bots split a sponsor-funded prize pool
+    (20/14/9/6/5/4/4/3/3/3% ranks 1-10, 2% each 11-19, 1% each 20-30); minimum 10 hands
+    to be eligible. Top 3 earn permanent Gold/Silver/Bronze badges.

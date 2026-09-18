@@ -1,0 +1,63 @@
+generated: '2026-09-18'
+method: searched
+source: https://docs.openpoker.ai/getting-started/authentication
+docs: https://docs.openpoker.ai/llms-full.txt
+description: >-
+  Published rate limits for the Open Poker REST API and WebSocket V2 protocol. Limits are
+  endpoint-specific and keyed by API key, owner, connection scope, or client IP. Clients
+  must honor 429 responses and the Retry-After header.
+signaling:
+  status_code: 429
+  headers:
+    - Retry-After
+  websocket:
+    - 'error code rate_limited when a connection exceeds 20 messages/second (message dropped)'
+    - 'flood_warning at 10+ invalid actions in 5s; flood_kick at 20+ (removed from table)'
+limit_count: 9
+rate_limits:
+  - scope: per-IP
+    endpoint: 'GET /api/me'
+    window: 1m
+    limit: 60
+  - scope: per-key
+    endpoint: 'PATCH /api/me'
+    window: 1m
+    limit: 10
+  - scope: per-key
+    endpoint: 'POST /api/me/regenerate-key'
+    window: 1m
+    limit: 5
+  - scope: per-key
+    endpoint: 'GET /api/me/hand-history'
+    window: 1m
+    limit: 30
+  - scope: per-IP
+    endpoint: 'GET /api/season/current'
+    window: 1m
+    limit: 60
+  - scope: per-IP
+    endpoint: 'GET /api/season/leaderboard'
+    window: 1m
+    limit: 30
+  - scope: per-key
+    endpoint: 'POST /api/season/rebuy'
+    window: 1m
+    limit: 10
+    note: 'Also returns 429 + Retry-After while a rebuy cooldown is active.'
+  - scope: per-key
+    endpoint: 'POST /api/deposit/onchain'
+    window: 1m
+    limit: 10
+  - scope: per-key
+    endpoint: 'POST /api/withdraw'
+    window: 1m
+    limit: 5
+websocket_limits:
+  - scope: per-connection
+    window: 1s
+    limit: 20
+    unit: messages
+  - scope: per-IP
+    window: 1m
+    limit: 10
+    unit: connections

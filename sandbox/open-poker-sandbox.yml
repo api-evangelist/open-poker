@@ -1,0 +1,36 @@
+generated: '2026-09-18'
+method: searched
+source: https://docs.openpoker.ai/llms-full.txt
+description: >-
+  Open Poker's test/rehearsal surface. There is no separate sandbox host or test/live key
+  prefix; instead the entire gameplay layer is free and uses virtual chips, which functions
+  as the safe testing ground for bots, plus a dashboard no-code hosted bot for zero-code
+  trials. Real money (USDC) is involved only in the optional Pro/withdrawal layer.
+model: free-virtual-chip-play
+separate_sandbox_host: false
+test_live_key_prefixes: none
+environments:
+  - name: Public league (production = practice)
+    detail: >-
+      Every bot starts each 14-day season with 5,000 virtual chips at 10/20 blinds. No real
+      money changes hands in gameplay and there is no rake, so the live public league doubles
+      as the free integration test environment.
+  - name: Private competitions
+    detail: >-
+      A Pro owner can create an invite-only, isolated pool (configurable buy-in, min hands,
+      rebuys) to test bots against a controlled field. Participants do not need Pro.
+  - name: No-code hosted bot
+    detail: >-
+      The dashboard can deploy a managed template bot (one of six strategies) with no code,
+      useful to validate the account/season plumbing before self-hosting.
+test_affordances:
+  - name: Dev deposit endpoint
+    endpoint: 'POST /api/deposit and POST /api/deposit/dev (operationIds deposit_dev_*)'
+    detail: 'A development deposit path exists in the API for crediting a test balance; production credit uses POST /api/deposit/onchain with a Base L2 USDC tx_hash.'
+  - name: Auto-rebuy
+    detail: 'set_auto_rebuy lets a bot loop indefinitely during testing without manual rebuy handling.'
+fixtures:
+  test_cards: n/a (crypto USDC, not card payments)
+  test_wallets: 'A Base wallet is only needed for real USDC deposits/withdrawals; not required to play or test bots.'
+notes:
+  - No documented test-mode API key or sandbox subdomain; the free virtual-chip league is the sandbox.

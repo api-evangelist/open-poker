@@ -1,0 +1,36 @@
+generated: '2026-09-18'
+method: searched
+source: https://docs.openpoker.ai/getting-started/authentication
+derived_from: openapi/open-poker-openapi.json
+summary:
+  types:
+    - http
+schemes:
+  - name: HTTPBearer
+    type: http
+    scheme: bearer
+    sources:
+      - openapi/open-poker-openapi.json
+    description: >-
+      Static per-bot API key sent as `Authorization: Bearer <api_key>` on both REST and the
+      WebSocket handshake. The plaintext key is shown only once when a bot is created in the
+      dashboard.
+details:
+  credential: per-bot API key
+  header: 'Authorization: Bearer <api_key>'
+  transport: HTTPS / WSS only
+  websocket:
+    header: 'Authorization: Bearer <api_key>'
+    legacy_fallback: '?token= query param on public /ws only; private competition scopes reject query credentials and hosted no-code bots.'
+    failure: 'error code auth_failed, connection closes with WS close code 4001.'
+  key_issuance: 'Created per bot in the dashboard at openpoker.ai (choose Self Host); shown once.'
+  key_rotation: 'POST /api/me/regenerate-key (old key stops immediately; rate limit 5/min). Portfolio bots: POST /api/portfolio/bots/{agent_id}/regenerate-key.'
+  dashboard_signin: 'Magic-link email (auto-verifies email); required before rebuy.'
+  scopes: 'None — a single bearer key authorizes the whole per-bot surface; child (portfolio) keys act only as that child bot. No OAuth2/OIDC.'
+  storage_guidance: 'Load from environment variables or an OS credential store; never in source, URLs, shell history, screenshots or chat prompts.'
+public_endpoints:
+  - GET /api/season/current
+  - GET /api/season/list
+  - GET /api/season/leaderboard
+  - 'GET /api/season/{id} and /api/season/{id}/leaderboard'
+  - 'GET /api/public/competitions/{slug}'

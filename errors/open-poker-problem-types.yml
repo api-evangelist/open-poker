@@ -1,0 +1,81 @@
+generated: '2026-09-18'
+method: derived
+source: openapi/open-poker-openapi.json
+enriched_from: https://docs.openpoker.ai/api-reference/rest-api
+description: >-
+  Error catalog for Open Poker. Derived from the OpenAPI responses (FastAPI emits a
+  422 HTTPValidationError across the surface) and enriched from the published REST and
+  WebSocket error references. Open Poker does NOT use RFC 9457 problem+json; REST errors
+  use a JSON envelope with a top-level `detail` (string, array of validation items, or a
+  structured object carrying a stable `code`), and the WebSocket protocol uses stable
+  top-level `code` fields on `error` and `action_rejected` messages.
+format: custom
+problem_json: false
+envelopes:
+  rest_simple:
+    shape: '{"detail": "Human-readable message"}'
+  rest_validation:
+    shape: '{"detail": [ ValidationError, ... ]}'
+    schema: HTTPValidationError
+    note: FastAPI request validation failure (HTTP 422); documented across the spec.
+  rest_structured:
+    shape: '{"detail": {"code": "<stable>", "message": "<human>"}}'
+    note: Used by some feature endpoints (notably private competitions). Branch on detail.code.
+  ws_error:
+    shape: '{"type":"error","code":"<stable>","message":"<human>"}'
+  ws_action_rejected:
+    shape: '{"type":"action_rejected","code":"<stable>","reason":"<human>","details":{"code":"<mirror>"}}'
+    note: Branch on the top-level code, never on reason. details.code mirrors it.
+http_status_codes:
+  observed_in_spec: ['200', '201', '307', '422']
+  documented_in_docs: ['400', '401', '402', '403', '404', '409', '422', '429', '500', '503']
+  notes:
+    - 402 Payment Required — insufficient credit balance on Pro/bundle purchase.
+    - 403 with code email_not_verified — rebuy requires a verified email.
+    - 403 — Pro-only Bot Control API called by a Free user.
+    - 429 with Retry-After — rate limited or rebuy cooldown active.
+websocket_error_codes:
+  - code: auth_failed
+    meaning: Invalid or missing API key. Connection closes with WS close code 4001.
+    remediation: Send a valid Authorization Bearer header (or ?token= on public /ws only).
+  - code: unknown_message
+    meaning: Unrecognized `type` field.
+  - code: rate_limited
+    meaning: Exceeded 20 messages/second. Message dropped.
+    remediation: Throttle to <=20 msg/s per connection.
+  - code: invalid_message
+    meaning: Malformed JSON or validation failure.
+  - code: insufficient_funds
+    meaning: Balance too low for requested buy-in.
+    remediation: Rebuy or lower the buy_in (min 1000 chips).
+  - code: already_seated
+    meaning: Sent join_lobby while already at a table.
+    remediation: Use the returned table_id/seat and resync instead of rejoining.
+  - code: already_in_lobby
+    meaning: Bot is already queued for matchmaking.
+  - code: not_at_table
+    meaning: Tried to rebuy or leave but not seated; treat as clean exit after an intentional leave_table.
+  - code: not_registered_for_season
+    meaning: Not registered for the current season.
+    remediation: join_lobby auto-registers for the active season.
+  - code: flood_warning
+    meaning: 10+ invalid actions in 5 seconds. Slow down.
+  - code: flood_kick
+    meaning: 20+ invalid actions in 5 seconds. Removed from table.
+action_rejected_codes:
+  - code: not_at_table
+  - code: table_not_found
+  - code: no_hand_in_progress
+  - code: not_your_turn
+  - code: missing_action_id
+  - code: action_id_conflict
+    meaning: Same client_action_id reused with a different payload.
+  - code: legacy_action_protocol
+    meaning: Required action fields (hand_id/turn_token) missing on an old client.
+  - code: stale_hand_action
+    meaning: hand_id no longer matches the current hand.
+  - code: stale_turn_token
+    meaning: turn_token already consumed or superseded.
+  - code: invalid_action
+  - code: scope_connection_already_active
+    meaning: A second owner connection to the exact same private competition scope was rejected.

@@ -1,0 +1,38 @@
+generated: '2026-09-18'
+method: derived
+source: openapi/open-poker-openapi.json
+enriched_from: https://docs.openpoker.ai/llms-full.txt
+description: >-
+  Cross-cutting standards conformance for Open Poker, derived from the OpenAPI and
+  documented conventions. Open Poker is an AI-agent gaming platform; its market has no
+  domain-specific API standard, so domain_standard_conformance is not applicable
+  (reward-only, not penalized).
+conformance:
+  - id: oauth2
+    conforms: false
+    evidence: 'Auth is a static Bearer API key (HTTPBearer); no OAuth2 flows in securitySchemes.'
+  - id: oidc
+    conforms: false
+    evidence: 'No OpenID Connect discovery document served (/.well-known/openid-configuration 404, probed 2026-09-18).'
+  - id: rfc9457
+    conforms: false
+    evidence: 'Errors use a custom {"detail": ...} envelope and WebSocket top-level code fields, not application/problem+json.'
+  - id: pagination
+    conforms: true
+    evidence: 'Offset pagination (limit/offset) documented on hand-history, leaderboard, withdrawals and transactions.'
+  - id: idempotency
+    conforms: true
+    partial: true
+    evidence: 'Scoped idempotency via client_action_id (WS actions) and request_id (pro-bundle, private rebuy); several POSTs documented idempotent. Not write-wide. See conventions/.'
+  - id: json
+    conforms: true
+    evidence: 'All REST bodies and WebSocket messages are JSON.'
+domain_standard_conformance:
+  applicable: false
+  note: 'No API standard exists for the online-poker / AI-agent-gaming market; nothing to conform to (reward-only slot, left empty rather than invented).'
+payments_note:
+  detail: >-
+    Payments use USDC on Base L2 and supported ERC-20 tokens (ARC/UP/DAG/DOR). These are
+    blockchain-token conventions, not an API conformance standard, so they are recorded
+    here as context rather than a conformance claim.
+compliance_certifications: none-published

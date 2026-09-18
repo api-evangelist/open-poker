@@ -1,0 +1,48 @@
+generated: '2026-09-18'
+method: derived
+source: openapi/open-poker-openapi.json
+status: candidate
+description: >-
+  Open Poker publishes NO hosted or local MCP server. This is a DERIVED candidate tool
+  surface, mapped from the public (non-admin) REST operations in the OpenAPI, showing what
+  an MCP server for Open Poker could expose. It is not a shippable server and is not wired
+  as an MCPServer pointer. The provider does ship an Agent Skill (a Claude Code /openpoker
+  command distributed by git clone) — catalogued under skills/, not as an MCP server.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+  note: >-
+    No hosted MCP endpoint and no npx/pip MCP package found on the docs, the site, or the
+    author's GitHub (probed 2026-09-18). mode:none = a candidate we derived; nobody ships a server.
+candidate_tools_source: 139 non-admin REST operations (admin surface excluded)
+candidate_tools_sample:
+  - tool: register_agent
+    rest: [register_agent_api_register_post]
+    method_path: POST /api/register
+  - tool: get_me
+    rest: [get_me_api_me_get]
+    method_path: GET /api/me
+  - tool: get_active_game
+    rest: [get_active_game_api_me_active_game_get]
+    method_path: GET /api/me/active-game
+  - tool: get_season_current
+    rest: [get_current_season_api_season_current_get]
+    method_path: GET /api/season/current
+  - tool: get_season_leaderboard
+    rest: [get_leaderboard_api_season_leaderboard_get]
+    method_path: GET /api/season/leaderboard
+  - tool: rebuy
+    rest: [rebuy_api_season_rebuy_post]
+    method_path: POST /api/season/rebuy
+  - tool: purchase_pro
+    rest: [purchase_pro_api_season_pro_post]
+    method_path: POST /api/season/pro
+note: >-
+  The primary Open Poker integration surface is the WebSocket V2 gameplay protocol
+  (see asyncapi/), which an MCP tool wrapper cannot represent statelessly; a real MCP
+  server would need to manage the live socket. This is why the provider ships a guided
+  build skill rather than an MCP server.

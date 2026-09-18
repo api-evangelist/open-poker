@@ -1,0 +1,88 @@
+generated: '2026-09-18'
+method: searched
+source: https://docs.openpoker.ai/llms-full.txt
+description: >-
+  Cross-cutting runtime semantics for the Open Poker REST API and WebSocket V2 protocol,
+  read from the published documentation and the OpenAPI. Covers auth, idempotency,
+  pagination, tracing/sequencing, versioning, the error envelope, rate-limit signaling
+  and reversibility.
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <api_key>'
+  transport: HTTPS / WSS only
+  websocket_fallback: 'Legacy ?token= query param on public /ws only; private competitions reject query credentials.'
+  key_rotation: 'POST /api/me/regenerate-key (old key stops immediately)'
+  cross_ref: authentication/open-poker-authentication.yml
+idempotency:
+  coverage: partial
+  mechanism: >-
+    No single Idempotency-Key header spans the whole mutating surface. Idempotency is
+    scoped to specific operations, each with its own dedup token, plus several naturally
+    idempotent endpoints.
+  scope:
+    - 'WebSocket action: client_action_id (unique per action; same id + same payload = safe cached retry, same id + different payload = action_id_conflict; echoed in action_ack)'
+    - 'POST /api/season/pro-bundle: optional stable request_id makes a retry of the same purchase idempotent'
+    - 'WebSocket rebuy (private competitions): request_id for safe retry after a lost response'
+    - 'POST /api/season/pro: documented idempotent'
+    - 'POST /api/bot/deploy/api: idempotent (returns status if already running)'
+    - 'POST /api/deposit/onchain: each tx_hash can be credited only once'
+  note: >-
+    Bundle purchases are otherwise repeatable and charge each time; request_id only
+    protects a retry of the same purchase. This is a scoped, per-operation mechanism,
+    not a uniform write-wide idempotency key.
+pagination:
+  style: offset
+  params: [limit, offset]
+  examples:
+    - 'GET /api/me/hand-history: limit (default 50, max 200), offset'
+    - 'GET /api/season/leaderboard: limit (max 1000), offset, min_hands, sort_by'
+    - 'GET /api/withdrawals, GET /api/transactions: limit, offset'
+  response: array or list body; no documented cursor or Link header.
+tracing_and_sequencing:
+  request_id: 'Client-supplied request_id / client_action_id for dedup (not a server trace header).'
+  websocket_watermarks:
+    - 'table_seq: table-wide monotonic watermark (not contiguous per recipient; accept forward jumps, ignore duplicates/regressions).'
+    - 'hand_seq: hand-local monotonic watermark.'
+    - 'ts: ISO 8601 timestamp on table-scoped messages.'
+    - 'state_hash: sha256:<hex> integrity hash over the message (excluding ts/table_seq/hand_seq/state_hash, compact JSON, sorted keys, ensure_ascii).'
+  resync: 'resync_request(table_id,last_table_seq) -> resync_response(replayed_events + snapshot).'
+versioning:
+  websocket_protocol: V2
+  rest_info_version: '0.1.0'
+  doc_revision: '2026-09-02'
+  scheme: 'Protocol family versioning (V2); no dated REST API version header documented.'
+  cross_ref: lifecycle/open-poker-lifecycle.yml
+error_envelope:
+  rest: '{"detail": string | array | {code,message}}'
+  websocket: 'top-level stable `code` on error and action_rejected messages'
+  problem_json: false
+  cross_ref: errors/open-poker-problem-types.yml
+rate_limit_signaling:
+  status: 429
+  header: Retry-After
+  websocket: 'rate_limited error message when >20 msg/s; flood_warning/flood_kick on repeated invalid actions'
+  cross_ref: rate-limits/open-poker-rate-limits.yml
+reversibility:
+  grade: documented
+  na: false
+  surfaces:
+    - operation: deploy_bot_api_api_bot_deploy_api_post
+      reversal: stop_bot_api_api_bot_stop_api_post
+      window: null
+      note: 'POST /bot/stop/api stops the hosted bot and revokes its token; reverses deploy. No stated time window.'
+    - operation: 'WebSocket join_lobby (buy-in)'
+      reversal: 'WebSocket leave_table'
+      window: null
+      note: 'leave_table returns the stack to the off-table chip balance. No time window.'
+    - operation: 'POST /api/season/pro / pro-bundle (purchase)'
+      reversal: none
+      window: null
+      note: 'No refund or cancellation of a Pro purchase is documented.'
+    - operation: withdraw_api_withdraw_post
+      reversal: none
+      window: null
+      note: 'A submitted withdrawal moves pending->processing->submitted->confirmed/failed; no cancel/reverse endpoint is documented.'
+  note: >-
+    Reversal paths exist for bot deployment and table buy-in, but no operation states a
+    reversal WINDOW, so the graded value is `documented`. Money-movement operations
+    (Pro purchase, USDC withdrawal) have no documented reversal.

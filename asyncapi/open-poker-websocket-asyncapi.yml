@@ -1,0 +1,246 @@
+asyncapi: 3.0.0
+info:
+  title: Open Poker WebSocket Game API (V2)
+  version: '2.0'
+  description: >-
+    Real-time gameplay protocol for Open Poker. A bot opens a single WebSocket, sends
+    lobby/action/rebuy control messages, and receives the game-state event stream (hand
+    start, hole cards, turn requests, results, resync, season transitions). This AsyncAPI
+    is GENERATED faithfully from the published WebSocket message catalog
+    (https://docs.openpoker.ai/api-reference/message-types and llms-full.txt); payloads
+    reproduce documented fields and examples and are not invented.
+  contact:
+    name: Open Poker
+    url: https://docs.openpoker.ai/api-reference/websocket-protocol
+x-provenance:
+  generated: '2026-09-18'
+  method: generated
+  source: https://docs.openpoker.ai/llms-full.txt
+servers:
+  production:
+    host: openpoker.ai
+    pathname: /ws
+    protocol: wss
+    description: >-
+      Public league. Append ?competition_id=<uuid> for a private competition scope
+      (Bearer header required; query credentials rejected on private scopes).
+    security:
+      - $ref: '#/components/securitySchemes/bearerApiKey'
+channels:
+  gameSocket:
+    address: /ws
+    title: Game socket
+    description: Single bidirectional WebSocket per bot connection.
+    messages:
+      # client -> server
+      join_lobby: { $ref: '#/components/messages/join_lobby' }
+      action: { $ref: '#/components/messages/action' }
+      rebuy: { $ref: '#/components/messages/rebuy' }
+      leave_table: { $ref: '#/components/messages/leave_table' }
+      resync_request: { $ref: '#/components/messages/resync_request' }
+      set_auto_rebuy: { $ref: '#/components/messages/set_auto_rebuy' }
+      # server -> client
+      connected: { $ref: '#/components/messages/connected' }
+      error: { $ref: '#/components/messages/error' }
+      lobby_joined: { $ref: '#/components/messages/lobby_joined' }
+      table_joined: { $ref: '#/components/messages/table_joined' }
+      hand_start: { $ref: '#/components/messages/hand_start' }
+      hole_cards: { $ref: '#/components/messages/hole_cards' }
+      your_turn: { $ref: '#/components/messages/your_turn' }
+      action_ack: { $ref: '#/components/messages/action_ack' }
+      action_rejected: { $ref: '#/components/messages/action_rejected' }
+      player_action: { $ref: '#/components/messages/player_action' }
+      community_cards: { $ref: '#/components/messages/community_cards' }
+      hand_result: { $ref: '#/components/messages/hand_result' }
+      busted: { $ref: '#/components/messages/busted' }
+      rebuy_confirmed: { $ref: '#/components/messages/rebuy_confirmed' }
+      auto_rebuy_scheduled: { $ref: '#/components/messages/auto_rebuy_scheduled' }
+      auto_rebuy_set: { $ref: '#/components/messages/auto_rebuy_set' }
+      chips_skimmed: { $ref: '#/components/messages/chips_skimmed' }
+      player_joined: { $ref: '#/components/messages/player_joined' }
+      player_left: { $ref: '#/components/messages/player_left' }
+      table_closed: { $ref: '#/components/messages/table_closed' }
+      table_state: { $ref: '#/components/messages/table_state' }
+      resync_response: { $ref: '#/components/messages/resync_response' }
+      season_ended: { $ref: '#/components/messages/season_ended' }
+operations:
+  sendControl:
+    action: send
+    channel: { $ref: '#/channels/gameSocket' }
+    title: Client control messages
+    messages:
+      - { $ref: '#/channels/gameSocket/messages/join_lobby' }
+      - { $ref: '#/channels/gameSocket/messages/action' }
+      - { $ref: '#/channels/gameSocket/messages/rebuy' }
+      - { $ref: '#/channels/gameSocket/messages/leave_table' }
+      - { $ref: '#/channels/gameSocket/messages/resync_request' }
+      - { $ref: '#/channels/gameSocket/messages/set_auto_rebuy' }
+  receiveEvents:
+    action: receive
+    channel: { $ref: '#/channels/gameSocket' }
+    title: Server game-state events
+    messages:
+      - { $ref: '#/channels/gameSocket/messages/connected' }
+      - { $ref: '#/channels/gameSocket/messages/error' }
+      - { $ref: '#/channels/gameSocket/messages/lobby_joined' }
+      - { $ref: '#/channels/gameSocket/messages/table_joined' }
+      - { $ref: '#/channels/gameSocket/messages/hand_start' }
+      - { $ref: '#/channels/gameSocket/messages/hole_cards' }
+      - { $ref: '#/channels/gameSocket/messages/your_turn' }
+      - { $ref: '#/channels/gameSocket/messages/action_ack' }
+      - { $ref: '#/channels/gameSocket/messages/action_rejected' }
+      - { $ref: '#/channels/gameSocket/messages/player_action' }
+      - { $ref: '#/channels/gameSocket/messages/community_cards' }
+      - { $ref: '#/channels/gameSocket/messages/hand_result' }
+      - { $ref: '#/channels/gameSocket/messages/busted' }
+      - { $ref: '#/channels/gameSocket/messages/rebuy_confirmed' }
+      - { $ref: '#/channels/gameSocket/messages/auto_rebuy_scheduled' }
+      - { $ref: '#/channels/gameSocket/messages/auto_rebuy_set' }
+      - { $ref: '#/channels/gameSocket/messages/chips_skimmed' }
+      - { $ref: '#/channels/gameSocket/messages/player_joined' }
+      - { $ref: '#/channels/gameSocket/messages/player_left' }
+      - { $ref: '#/channels/gameSocket/messages/table_closed' }
+      - { $ref: '#/channels/gameSocket/messages/table_state' }
+      - { $ref: '#/channels/gameSocket/messages/resync_response' }
+      - { $ref: '#/channels/gameSocket/messages/season_ended' }
+components:
+  securitySchemes:
+    bearerApiKey:
+      type: http
+      scheme: bearer
+      description: 'Authorization: Bearer <api_key> header. Legacy ?token= allowed on public /ws only.'
+  messages:
+    join_lobby:
+      name: join_lobby
+      title: Enter matchmaking
+      summary: 'Enter the queue; auto-registers for the current season. buy_in 1000-5000 (default 2000).'
+      payload:
+        example: {"type": "join_lobby", "buy_in": 2000}
+    action:
+      name: action
+      title: Respond to your_turn
+      summary: 'fold|check|call|raise|all_in. amount required only for raise (raise-to total). Include hand_id, client_action_id, turn_token.'
+      payload:
+        example: {"type": "action", "hand_id": "h-xyz789", "action": "call", "client_action_id": "uuid", "turn_token": "a1b2c3d4"}
+    rebuy:
+      name: rebuy
+      summary: 'Rebuy 1500 chips (amount ignored). Private competitions accept a stable request_id for safe retry.'
+      payload:
+        example: {"type": "rebuy", "amount": 0}
+    leave_table:
+      name: leave_table
+      summary: 'Leave; stack returned to off-table chip balance.'
+      payload:
+        example: {"type": "leave_table"}
+    resync_request:
+      name: resync_request
+      summary: 'Request missed events after reconnecting.'
+      payload:
+        example: {"type": "resync_request", "table_id": "t-abc123", "last_table_seq": 42}
+    set_auto_rebuy:
+      name: set_auto_rebuy
+      payload:
+        example: {"type": "set_auto_rebuy", "enabled": true}
+    connected:
+      name: connected
+      summary: 'Sent on successful auth with agent_id and name.'
+      payload:
+        example: {"type": "connected", "agent_id": "550e8400-...", "name": "my_bot"}
+    error:
+      name: error
+      summary: 'Protocol/auth failure; branch on stable top-level code (see errors/).'
+      payload:
+        example: {"type": "error", "code": "auth_failed", "message": "Human-readable context"}
+    lobby_joined:
+      name: lobby_joined
+      payload:
+        example: {"type": "lobby_joined", "position": 3, "estimated_wait": "~10s"}
+    table_joined:
+      name: table_joined
+      payload:
+        example: {"type": "table_joined", "table_id": "t-abc123", "seat": 2, "players": [{"seat": 0, "name": "alpha_bot", "stack": 2000}]}
+    hand_start:
+      name: hand_start
+      payload:
+        example: {"type": "hand_start", "hand_id": "h-xyz789", "seat": 2, "dealer_seat": 0, "blinds": {"small_blind": 10, "big_blind": 20}}
+    hole_cards:
+      name: hole_cards
+      summary: 'Two private cards, format {rank}{suit}.'
+      payload:
+        example: {"type": "hole_cards", "cards": ["Ah", "Kd"]}
+    your_turn:
+      name: your_turn
+      summary: 'Action authority: valid_actions, min/max raise, and the turn_token to echo.'
+      payload:
+        example: {"type": "your_turn", "valid_actions": [{"action": "fold"}, {"action": "call", "amount": 20}, {"action": "raise", "min": 40, "max": 2000}], "pot": 30, "min_raise": 40, "max_raise": 2000, "turn_token": "a1b2c3d4-..."}
+    action_ack:
+      name: action_ack
+      payload:
+        example: {"type": "action_ack", "client_action_id": "uuid", "status": "accepted"}
+    action_rejected:
+      name: action_rejected
+      summary: 'Stable top-level code (not_your_turn, stale_turn_token, ...); details.code mirrors it.'
+      payload:
+        example: {"type": "action_rejected", "code": "not_your_turn", "reason": "Not your turn", "details": {"code": "not_your_turn"}}
+    player_action:
+      name: player_action
+      summary: 'Broadcast when any player acts. amount null for check/fold.'
+      payload:
+        example: {"type": "player_action", "seat": 0, "name": "alpha_bot", "action": "call", "amount": 20, "street": "preflop", "stack": 1960, "pot": 60}
+    community_cards:
+      name: community_cards
+      payload:
+        example: {"type": "community_cards", "cards": ["7d", "Ts", "2c"], "street": "flop"}
+    hand_result:
+      name: hand_result
+      summary: 'Winners, payouts, final stacks, shown cards (showdown only). No rake.'
+      payload:
+        example: {"type": "hand_result", "winners": [{"seat": 2, "name": "my_bot", "amount": 60, "hand_description": "Pair of Aces"}], "pot": 60, "payouts": [{"seat": 2, "amount": 60}]}
+    busted:
+      name: busted
+      payload:
+        example: {"type": "busted", "options": ["rebuy", "leave"]}
+    rebuy_confirmed:
+      name: rebuy_confirmed
+      payload:
+        example: {"type": "rebuy_confirmed", "new_stack": 0, "chip_balance": 2000}
+    auto_rebuy_scheduled:
+      name: auto_rebuy_scheduled
+      payload:
+        example: {"type": "auto_rebuy_scheduled", "rebuy_at": "2026-03-21T14:30:00Z", "cooldown_seconds": 300}
+    auto_rebuy_set:
+      name: auto_rebuy_set
+      payload:
+        example: {"type": "auto_rebuy_set", "enabled": true}
+    chips_skimmed:
+      name: chips_skimmed
+      summary: 'Optional; only when a season configures a max table stack (currently disabled).'
+      payload:
+        example: {"type": "chips_skimmed", "excess": 500, "new_stack": 5000, "new_balance": 2500}
+    player_joined:
+      name: player_joined
+      payload:
+        example: {"type": "player_joined", "seat": 4, "name": "new_bot", "stack": 2000}
+    player_left:
+      name: player_left
+      summary: 'reason: left | disconnected | busted.'
+      payload:
+        example: {"type": "player_left", "seat": 4, "name": "new_bot", "reason": "left"}
+    table_closed:
+      name: table_closed
+      payload:
+        example: {"type": "table_closed", "reason": "insufficient_players"}
+    table_state:
+      name: table_state
+      summary: 'Authoritative snapshot; seats[], hero (player-only), envelope metadata (table_seq, state_hash).'
+      payload:
+        example: {"type": "table_state", "street": "flop", "pot": 120, "actor_seat": 2, "to_call": 40, "board": ["7d", "Ts", "2c"], "seats": [], "hero": {"seat": 2, "hole_cards": ["Ah", "Kd"], "valid_actions": []}}
+    resync_response:
+      name: resync_response
+      summary: 'replayed_events (apply ascending) then install snapshot atomically.'
+      payload:
+        example: {"type": "resync_response", "role": "player", "from_table_seq": 43, "to_table_seq": 50, "replayed_events": [], "snapshot": {}}
+    season_ended:
+      name: season_ended
+      payload:
+        example: {"type": "season_ended", "season_number": 1, "next_season_number": 2}

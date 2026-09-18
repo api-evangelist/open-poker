@@ -1,0 +1,44 @@
+overlay: 1.0.0
+info:
+  title: Open Poker REST API — API Evangelist enhancements
+  version: 1.0.0
+x-provenance:
+  generated: '2026-09-18'
+  method: generated
+  source: openapi/open-poker-openapi.json
+  note: >-
+    Non-destructive enhancements over the provider's harvested OpenAPI. The upstream spec
+    ships no servers[] block and no info.contact; both are recoverable from the published
+    docs and the served security.txt. This overlay records those enrichments without
+    mutating the original spec. The apis.io scorer parses the ORIGINAL spec, so this
+    overlay improves our derived artifacts, not the raw contract score.
+extends: openapi/open-poker-openapi.json
+actions:
+  - target: $.info
+    description: Add the API base server and a security contact recovered from published docs.
+    update:
+      contact:
+        name: Open Poker Security
+        url: https://openpoker.ai/.well-known/security.txt
+        email: security@openpoker.ai
+      termsOfService: https://openpoker.ai/terms
+  - target: $
+    description: >-
+      Add the server base. Upstream omits servers[]; docs state base
+      https://api.openpoker.ai/api and spec paths already carry the /api prefix, so the
+      server root is https://api.openpoker.ai.
+    update:
+      servers:
+        - url: https://api.openpoker.ai
+          description: Production
+  - target: $.tags
+    description: Add human descriptions for the operation tag groups.
+    update:
+      - name: season
+        description: Season lifecycle, leaderboard, rebuys and Pro purchase.
+      - name: bot
+        description: Hosted (Pro) bot control — strategy, deploy, stop, status.
+      - name: portfolio
+        description: Owner-level management of up to five strategy bots (Pro).
+      - name: competitions
+        description: Private, invite-only competition pools created by Pro owners.

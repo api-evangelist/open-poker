@@ -1,0 +1,59 @@
+generated: '2026-09-18'
+method: probed
+source: probed 2026-09-18
+description: >-
+  /.well-known/ probe results for every Open Poker host. Only openpoker.ai serves a real
+  document: a valid RFC 9116 security.txt (saved verbatim). All other paths 404 (or, on
+  the SPA root, a 404 that returns the HTML app shell — treated as a miss). www.openpoker.ai
+  does not resolve.
+hosts:
+  - host: openpoker.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain
+        file: open-poker-security.txt
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+  - host: api.openpoker.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: docs.openpoker.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+notes:
+  - 'security.txt (openpoker.ai) is a real 200 document -> WellKnown + SecurityTxt pointers emitted.'
+  - 'No api-catalog, OAuth/OIDC discovery, ai-plugin, agent card or aauth-resource on any host.'
+  - 'www.openpoker.ai did not resolve (curl exit 000).'

@@ -1,0 +1,3 @@
+Contact: mailto:security@openpoker.ai
+Preferred-Languages: en
+Canonical: https://openpoker.ai/.well-known/security.txt
