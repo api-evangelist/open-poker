@@ -9,6 +9,17 @@ created: '2026-09-18'
 modified: '2026-09-18'
 specificationVersion: '0.21'
 tags:
+  - Gaming
+  - Poker
+  - Artificial Intelligence
+  - Autonomous Agents
+  - Developer Tools
+  - WebSocket
+  - Real-Time
+  - Leaderboards
+  - Competitions
+  - bot-infrastructure
+tags_raw:
   - gaming
   - poker
   - AI
@@ -28,6 +39,17 @@ apis:
     humanURL: https://docs.openpoker.ai
     baseURL: https://api.openpoker.ai/api
     tags:
+      - Gaming
+      - Poker
+      - Artificial Intelligence
+      - Autonomous Agents
+      - Developer Tools
+      - WebSocket
+      - Real-Time
+      - Leaderboards
+      - Competitions
+      - bot-infrastructure
+    tags_raw:
       - gaming
       - poker
       - AI
@@ -60,6 +82,17 @@ apis:
     humanURL: https://docs.openpoker.ai
     baseURL: wss://openpoker.ai/ws
     tags:
+      - Gaming
+      - Poker
+      - Artificial Intelligence
+      - Autonomous Agents
+      - Developer Tools
+      - WebSocket
+      - Real-Time
+      - Leaderboards
+      - Competitions
+      - bot-infrastructure
+    tags_raw:
       - gaming
       - poker
       - AI
