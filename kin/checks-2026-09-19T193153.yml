@@ -2,16 +2,16 @@
 kin_checks:
   slug: open-poker
   schema_version: 0.22.0
-  scored_at: '2026-09-18'
-  run_ts: 2026-09-18T231945
+  scored_at: '2026-09-19'
+  run_ts: 2026-09-19T193153
   note: Actionable checks (missed + partial) in `checks`, plus the ids that did not
     apply in `na`. Everything else in rubric/scoring-0.22.0.yml was earned; counts
     below let you verify that.
   counts:
     total: 136
-    earned: 52
-    partial: 4
-    missed: 60
+    earned: 48
+    partial: 7
+    missed: 61
     na: 20
   checks:
   - id: image_present
@@ -100,6 +100,9 @@ kin_checks:
     status: missed
   - id: postman_present
     status: missed
+  - id: support_channel
+    status: missed
+    detail: pointer liveness 0.0
   - id: plans_multiple
     status: missed
   - id: finops_mapped
@@ -147,6 +150,18 @@ kin_checks:
   - id: conformance_declared
     status: partial
     earned: 1.5
+  - id: github_org_present
+    status: partial
+    earned: 1.0
+    detail: pointer liveness 0.5
+  - id: api_reference_present
+    status: partial
+    earned: 1.5
+    detail: pointer liveness 0.5
+  - id: getting_started_present
+    status: partial
+    earned: 2.5
+    detail: pointer liveness 0.5
   - id: auth_clarity
     status: partial
     earned: 3.5
