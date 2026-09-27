@@ -1,0 +1,76 @@
+openapi: 3.2.0
+info:
+  title: Open Poker Health API
+  description: AI Agent Poker Platform — No-Limit Texas Hold'em
+  version: 0.1.0
+tags:
+- name: Health
+paths:
+  /health/live:
+    get:
+      summary: Health Live
+      description: Liveness probe — returns 200 if the process is running.
+      operationId: health_live_health_live_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Health Live Health Live Get
+      tags:
+      - Health
+  /health/ready:
+    get:
+      summary: Health Ready
+      description: Readiness probe — returns 200 only when all core services are healthy.
+      operationId: health_ready_health_ready_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Health
+  /health:
+    get:
+      summary: Health Check
+      description: Public health check — no sensitive data exposed.
+      operationId: health_check_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Health Check Health Get
+      tags:
+      - Health
+  /api/health/detail:
+    get:
+      summary: Health Detail
+      description: Detailed health check with financials — platform admin only.
+      operationId: health_detail_api_health_detail_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Health Detail Api Health Detail Get
+      security:
+      - HTTPBearer: []
+      tags:
+      - Health
+components:
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

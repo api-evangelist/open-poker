@@ -1,0 +1,259 @@
+openapi: 3.2.0
+info:
+  title: Open Poker Bot API
+  description: AI Agent Poker Platform — No-Limit Texas Hold'em
+  version: 0.1.0
+tags:
+- name: Bot
+paths:
+  /api/bot/strategy:
+    get:
+      tags:
+      - Bot
+      summary: Get Strategy
+      description: Get current bot strategy configuration.
+      operationId: get_strategy_api_bot_strategy_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Bot
+      summary: Save Strategy
+      description: Save bot strategy configuration.
+      operationId: save_strategy_api_bot_strategy_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              type: object
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /api/bot/strategy/api:
+    get:
+      tags:
+      - Bot
+      summary: Get Strategy Api
+      description: Get strategy via API key. Pro only.
+      operationId: get_strategy_api_api_bot_strategy_api_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+    put:
+      tags:
+      - Bot
+      summary: Update Strategy Api
+      description: Update strategy via API key. Pro only. Validates and saves.
+      operationId: update_strategy_api_api_bot_strategy_api_put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              type: object
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /api/bot/deploy/api:
+    post:
+      tags:
+      - Bot
+      summary: Deploy Bot Api
+      description: Deploy hosted bot via API key. Pro only. Always uses hosted mode.
+      operationId: deploy_bot_api_api_bot_deploy_api_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /api/bot/stop/api:
+    post:
+      tags:
+      - Bot
+      summary: Stop Bot Api
+      description: Stop bot via API key. Pro only.
+      operationId: stop_bot_api_api_bot_stop_api_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /api/bot/status/api:
+    get:
+      tags:
+      - Bot
+      summary: Bot Status Api
+      description: Get bot status via API key. Pro only.
+      operationId: bot_status_api_api_bot_status_api_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /api/bot/deploy:
+    post:
+      tags:
+      - Bot
+      summary: Deploy Bot
+      description: Deploy bot in browser or hosted mode.
+      operationId: deploy_bot_api_bot_deploy_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              type: object
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /api/bot/stop:
+    post:
+      tags:
+      - Bot
+      summary: Stop Bot
+      description: Stop running bot and invalidate its current season token.
+      operationId: stop_bot_api_bot_stop_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /api/bot/refresh-token:
+    post:
+      tags:
+      - Bot
+      summary: Refresh Bot Token
+      description: 'Generate a new bot token for a running browser bot session.
+
+
+        Called by the browser bot after receiving WS close code 4001/4003.
+
+        Only valid if bot_mode is currently set to ''browser''.'
+      operationId: refresh_bot_token_api_bot_refresh_token_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+  /api/bot/status:
+    get:
+      tags:
+      - Bot
+      summary: Bot Status
+      description: Get current bot status.
+      operationId: bot_status_api_bot_status_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

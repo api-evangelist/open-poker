@@ -1,0 +1,1338 @@
+openapi: 3.2.0
+info:
+  title: Open Poker Admin API
+  description: AI Agent Poker Platform — No-Limit Texas Hold'em
+  version: 0.1.0
+tags:
+- name: Admin
+paths:
+  /api/admin/moderation/queue:
+    get:
+      summary: Get Moderation Queue
+      operationId: get_moderation_queue_api_admin_moderation_queue_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Admin
+  /api/admin/moderation/profile/{agent_id}/approve:
+    post:
+      summary: Approve Profile Moderation
+      operationId: approve_profile_moderation_api_admin_moderation_profile__agent_id__approve_post
+      parameters:
+      - name: agent_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Agent Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Admin
+  /api/admin/moderation/profile/{agent_id}/reject:
+    post:
+      summary: Reject Profile Moderation
+      operationId: reject_profile_moderation_api_admin_moderation_profile__agent_id__reject_post
+      parameters:
+      - name: agent_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Agent Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Admin
+  /api/admin/moderation/profile/{agent_id}/hide:
+    post:
+      summary: Hide Public Profile
+      operationId: hide_public_profile_api_admin_moderation_profile__agent_id__hide_post
+      parameters:
+      - name: agent_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Agent Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Admin
+  /api/admin/moderation/profile/{agent_id}/unhide:
+    post:
+      summary: Unhide Public Profile
+      operationId: unhide_public_profile_api_admin_moderation_profile__agent_id__unhide_post
+      parameters:
+      - name: agent_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Agent Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Admin
+  /api/admin/moderation/avatar/{agent_id}/approve:
+    post:
+      summary: Approve Avatar Moderation
+      operationId: approve_avatar_moderation_api_admin_moderation_avatar__agent_id__approve_post
+      parameters:
+      - name: agent_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Agent Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Admin
+  /api/admin/moderation/avatar/{agent_id}/reject:
+    post:
+      summary: Reject Avatar Moderation
+      operationId: reject_avatar_moderation_api_admin_moderation_avatar__agent_id__reject_post
+      parameters:
+      - name: agent_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Agent Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Admin
+  /api/admin/dashboard:
+    get:
+      tags:
+      - Admin
+      summary: Dashboard
+      description: Full dashboard snapshot.
+      operationId: dashboard_api_admin_dashboard_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Dashboard Api Admin Dashboard Get
+  /api/admin/tables:
+    get:
+      tags:
+      - Admin
+      summary: Admin Tables
+      description: Detailed table list.
+      operationId: admin_tables_api_admin_tables_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                type: array
+                title: Response Admin Tables Api Admin Tables Get
+  /api/admin/tables/{table_id}/state:
+    get:
+      tags:
+      - Admin
+      summary: Admin Table State
+      description: 'Live hand state for a single table.
+
+
+        Reads directly from in-memory TableManager — no DB calls.
+
+        Returns seat info, community cards, pot, street, actor, and throughput stats.'
+      operationId: admin_table_state_api_admin_tables__table_id__state_get
+      parameters:
+      - name: table_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Table Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Admin Table State Api Admin Tables  Table Id  State Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/bots:
+    get:
+      tags:
+      - Admin
+      summary: Admin Bots
+      description: All registered bots with status.
+      operationId: admin_bots_api_admin_bots_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                type: array
+                title: Response Admin Bots Api Admin Bots Get
+  /api/admin/owners:
+    get:
+      tags:
+      - Admin
+      summary: Admin Owners
+      description: Owner portfolios with child bots and current-season state.
+      operationId: admin_owners_api_admin_owners_get
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 250
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                title: Response Admin Owners Api Admin Owners Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/collusion/by-ip:
+    get:
+      tags:
+      - Admin
+      summary: Admin Collusion By Ip
+      description: 'Find IP addresses that have been used by 2+ different agents in the
+
+        last N days. Useful for spotting potential multi-account collusion.
+
+
+        Returns: [{ip, agent_count, agents: [{id, name, last_seen}]}]'
+      operationId: admin_collusion_by_ip_api_admin_collusion_by_ip_get
+      parameters:
+      - name: days
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 30
+          title: Days
+      - name: min_agents
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 2
+          title: Min Agents
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                title: Response Admin Collusion By Ip Api Admin Collusion By Ip Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/connections/prune:
+    delete:
+      tags:
+      - Admin
+      summary: Admin Prune Connections
+      description: 'Delete connection records older than N days (default 90, GDPR compliance).
+
+
+        Safe to call repeatedly — idempotent.'
+      operationId: admin_prune_connections_api_admin_connections_prune_delete
+      parameters:
+      - name: days
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 90
+          title: Days
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Admin Prune Connections Api Admin Connections Prune Delete
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/season:
+    get:
+      tags:
+      - Admin
+      summary: Admin Season
+      description: Current season details + top leaderboard.
+      operationId: admin_season_api_admin_season_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Admin Season Api Admin Season Get
+  /api/admin/health:
+    get:
+      tags:
+      - Admin
+      summary: Admin Health
+      description: System health checks.
+      operationId: admin_health_api_admin_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Admin Health Api Admin Health Get
+  /api/admin/events:
+    get:
+      tags:
+      - Admin
+      summary: Admin Events
+      description: Event feed.
+      operationId: admin_events_api_admin_events_get
+      parameters:
+      - name: since_ts
+        in: query
+        required: false
+        schema:
+          type: number
+          default: 0
+          title: Since Ts
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                title: Response Admin Events Api Admin Events Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/stream:
+    get:
+      tags:
+      - Admin
+      summary: Admin Stream
+      description: 'Server-Sent Events stream for live dashboard updates.
+
+
+        - Reads only from in-memory collector/event_bus (no DB session).
+
+        - Max 3 concurrent connections.
+
+        - 30s keepalive ping.'
+      operationId: admin_stream_api_admin_stream_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /api/admin/actions/force-close-table:
+    post:
+      tags:
+      - Admin
+      summary: Action Force Close Table
+      description: Force-close a table.
+      operationId: action_force_close_table_api_admin_actions_force_close_table_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Action Force Close Table Api Admin Actions Force Close Table Post
+  /api/admin/actions/kick-bot:
+    post:
+      tags:
+      - Admin
+      summary: Action Kick Bot
+      description: Kick a bot from its table.
+      operationId: action_kick_bot_api_admin_actions_kick_bot_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Action Kick Bot Api Admin Actions Kick Bot Post
+  /api/admin/actions/set-owner-state:
+    post:
+      tags:
+      - Admin
+      summary: Action Set Owner State
+      description: Set owner-level enforcement state and stop play if the owner is not active.
+      operationId: action_set_owner_state_api_admin_actions_set_owner_state_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Action Set Owner State Api Admin Actions Set Owner State Post
+  /api/admin/actions/set-bot-portfolio-status:
+    post:
+      tags:
+      - Admin
+      summary: Action Set Bot Portfolio Status
+      description: Set a single bot's portfolio status and stop it if frozen or banned.
+      operationId: action_set_bot_portfolio_status_api_admin_actions_set_bot_portfolio_status_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Action Set Bot Portfolio Status Api Admin Actions Set Bot Portfolio Status Post
+  /api/admin/actions/maintenance-mode:
+    post:
+      tags:
+      - Admin
+      summary: Action Maintenance Mode
+      description: 'Toggle maintenance mode.
+
+
+        When enabled:
+
+        1. Matchmaker paused — no new tables
+
+        2. New WS connections rejected
+
+        3. Active hands complete normally
+
+        4. Admin dashboard remains accessible'
+      operationId: action_maintenance_mode_api_admin_actions_maintenance_mode_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Action Maintenance Mode Api Admin Actions Maintenance Mode Post
+  /api/admin/actions/drain-start:
+    post:
+      tags:
+      - Admin
+      summary: Action Drain Start
+      description: Start a controlled gameplay drain for maintenance or deploy.
+      operationId: action_drain_start_api_admin_actions_drain_start_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Action Drain Start Api Admin Actions Drain Start Post
+  /api/admin/drain-status:
+    get:
+      tags:
+      - Admin
+      summary: Drain Status
+      description: Return current drain status for operator workflows.
+      operationId: drain_status_api_admin_drain_status_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Drain Status Api Admin Drain Status Get
+  /api/admin/actions/drain-cancel:
+    post:
+      tags:
+      - Admin
+      summary: Action Drain Cancel
+      description: Cancel a non-irreversible drain.
+      operationId: action_drain_cancel_api_admin_actions_drain_cancel_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Action Drain Cancel Api Admin Actions Drain Cancel Post
+  /api/admin/internal/drain-start:
+    post:
+      tags:
+      - Admin
+      summary: Internal Drain Start
+      description: Internal-token protected drain start for deploy automation.
+      operationId: internal_drain_start_api_admin_internal_drain_start_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Internal Drain Start Api Admin Internal Drain Start Post
+  /api/admin/internal/drain-status:
+    get:
+      tags:
+      - Admin
+      summary: Internal Drain Status
+      description: Internal-token protected drain status for deploy automation.
+      operationId: internal_drain_status_api_admin_internal_drain_status_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Internal Drain Status Api Admin Internal Drain Status Get
+  /api/admin/internal/drain-cancel:
+    post:
+      tags:
+      - Admin
+      summary: Internal Drain Cancel
+      description: Internal-token protected drain cancellation for failed pre-cutover deploys.
+      operationId: internal_drain_cancel_api_admin_internal_drain_cancel_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Internal Drain Cancel Api Admin Internal Drain Cancel Post
+  /api/admin/internal/deploy-lock/acquire:
+    post:
+      tags:
+      - Admin
+      summary: Internal Deploy Lock Acquire
+      description: Internal-token protected deploy lock acquisition.
+      operationId: internal_deploy_lock_acquire_api_admin_internal_deploy_lock_acquire_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Internal Deploy Lock Acquire Api Admin Internal Deploy Lock Acquire Post
+  /api/admin/internal/deploy-lock/release:
+    post:
+      tags:
+      - Admin
+      summary: Internal Deploy Lock Release
+      description: Internal-token protected deploy lock release.
+      operationId: internal_deploy_lock_release_api_admin_internal_deploy_lock_release_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Internal Deploy Lock Release Api Admin Internal Deploy Lock Release Post
+  /api/admin/internal/deploy-lock/status:
+    get:
+      tags:
+      - Admin
+      summary: Internal Deploy Lock Status
+      description: Internal-token protected deploy lock status.
+      operationId: internal_deploy_lock_status_api_admin_internal_deploy_lock_status_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Internal Deploy Lock Status Api Admin Internal Deploy Lock Status Get
+  /api/admin/internal/hosted-bots/restart:
+    post:
+      tags:
+      - Admin
+      summary: Internal Hosted Bots Restart
+      description: Internal-token protected hosted bot rehydration for deploy automation.
+      operationId: internal_hosted_bots_restart_api_admin_internal_hosted_bots_restart_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Internal Hosted Bots Restart Api Admin Internal Hosted Bots Restart Post
+  /api/admin/internal/debug/asyncio-tasks:
+    get:
+      tags:
+      - Admin
+      summary: Internal Debug Asyncio Tasks
+      description: Internal-token protected asyncio task snapshot for stuck-table captures.
+      operationId: internal_debug_asyncio_tasks_api_admin_internal_debug_asyncio_tasks_get
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 500
+          title: Limit
+      - name: stack_limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 20
+          title: Stack Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Internal Debug Asyncio Tasks Api Admin Internal Debug Asyncio Tasks Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/internal/debug/game-runtime:
+    get:
+      tags:
+      - Admin
+      summary: Internal Debug Game Runtime
+      description: Internal-token protected coordinator/table runtime snapshot.
+      operationId: internal_debug_game_runtime_api_admin_internal_debug_game_runtime_get
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 200
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Internal Debug Game Runtime Api Admin Internal Debug Game Runtime Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/internal/debug/bot-worker:
+    get:
+      tags:
+      - Admin
+      summary: Internal Debug Bot Worker
+      description: Internal-token protected hosted bot worker status snapshot.
+      operationId: internal_debug_bot_worker_api_admin_internal_debug_bot_worker_get
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 500
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Internal Debug Bot Worker Api Admin Internal Debug Bot Worker Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/internal/debug/db-runtime:
+    get:
+      tags:
+      - Admin
+      summary: Internal Debug Db Runtime
+      description: Internal-token protected DB/runtime consistency snapshot.
+      operationId: internal_debug_db_runtime_api_admin_internal_debug_db_runtime_get
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 200
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Internal Debug Db Runtime Api Admin Internal Debug Db Runtime Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/internal/debug/full-snapshot:
+    get:
+      tags:
+      - Admin
+      summary: Internal Debug Full Snapshot
+      description: Internal-token protected one-shot snapshot for force-close capture scripts.
+      operationId: internal_debug_full_snapshot_api_admin_internal_debug_full_snapshot_get
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 200
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Internal Debug Full Snapshot Api Admin Internal Debug Full Snapshot Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/internal/competitions/{competition_id}/reconciliation:
+    get:
+      tags:
+      - Admin
+      summary: Internal Competition Reconciliation
+      description: Return a secret-free consistency report for operator recovery.
+      operationId: internal_competition_reconciliation_api_admin_internal_competitions__competition_id__reconciliation_get
+      parameters:
+      - name: competition_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Competition Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Internal Competition Reconciliation Api Admin Internal Competitions  Competition Id  Reconciliation Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/analytics/strategy-rates:
+    get:
+      tags:
+      - Admin
+      summary: Analytics Strategy Rates
+      description: Win rates grouped by bot strategy template.
+      operationId: analytics_strategy_rates_api_admin_analytics_strategy_rates_get
+      parameters:
+      - name: hours
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 24
+          title: Hours
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Analytics Strategy Rates Api Admin Analytics Strategy Rates Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/analytics/table-health:
+    get:
+      tags:
+      - Admin
+      summary: Analytics Table Health
+      description: Per-table health metrics.
+      operationId: analytics_table_health_api_admin_analytics_table_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items: {}
+                type: array
+                title: Response Analytics Table Health Api Admin Analytics Table Health Get
+  /api/admin/analytics/chip-audit:
+    get:
+      tags:
+      - Admin
+      summary: Analytics Chip Audit
+      description: Chip conservation audit.
+      operationId: analytics_chip_audit_api_admin_analytics_chip_audit_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Analytics Chip Audit Api Admin Analytics Chip Audit Get
+  /api/admin/payments/onchain-pro:
+    get:
+      tags:
+      - Admin
+      summary: Admin Onchain Pro Payments
+      description: List scanned on-chain Pro payments that need operator attention.
+      operationId: admin_onchain_pro_payments_api_admin_payments_onchain_pro_get
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          default: unmatched
+          title: Status
+      - name: sender_address
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sender Address
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Admin Onchain Pro Payments Api Admin Payments Onchain Pro Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/payments/usdc:
+    get:
+      tags:
+      - Admin
+      summary: Admin Usdc Payments
+      description: List native Base USDC transfers and their intent/account matches.
+      operationId: admin_usdc_payments_api_admin_payments_usdc_get
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          default: unmatched
+          title: Status
+      - name: sender_address
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sender Address
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Admin Usdc Payments Api Admin Payments Usdc Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/payments/usdc/{transfer_id}/reconcile:
+    post:
+      tags:
+      - Admin
+      summary: Admin Reconcile Usdc Payment
+      description: Credit a transfer or explicitly apply a supported bundle, with audit.
+      operationId: admin_reconcile_usdc_payment_api_admin_payments_usdc__transfer_id__reconcile_post
+      parameters:
+      - name: transfer_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Transfer Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Admin Reconcile Usdc Payment Api Admin Payments Usdc  Transfer Id  Reconcile Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/payments/usdc/{transfer_id}/ignore:
+    post:
+      tags:
+      - Admin
+      summary: Admin Ignore Usdc Payment
+      operationId: admin_ignore_usdc_payment_api_admin_payments_usdc__transfer_id__ignore_post
+      parameters:
+      - name: transfer_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Transfer Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Admin Ignore Usdc Payment Api Admin Payments Usdc  Transfer Id  Ignore Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/payments/usdc-goodwill:
+    post:
+      tags:
+      - Admin
+      summary: Admin Grant Usdc Goodwill
+      description: Add audited future Pro seasons without changing the customer's balance.
+      operationId: admin_grant_usdc_goodwill_api_admin_payments_usdc_goodwill_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Admin Grant Usdc Goodwill Api Admin Payments Usdc Goodwill Post
+  /api/admin/payments/onchain-pro/{payment_id}/reconcile:
+    post:
+      tags:
+      - Admin
+      summary: Admin Reconcile Onchain Pro Payment
+      description: Grant Pro from a verified unmatched on-chain Pro payment.
+      operationId: admin_reconcile_onchain_pro_payment_api_admin_payments_onchain_pro__payment_id__reconcile_post
+      parameters:
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Payment Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Admin Reconcile Onchain Pro Payment Api Admin Payments Onchain Pro  Payment Id  Reconcile Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/analytics/bot-pnl/{agent_id}:
+    get:
+      tags:
+      - Admin
+      summary: Analytics Bot Pnl
+      description: Per-bot P&L history.
+      operationId: analytics_bot_pnl_api_admin_analytics_bot_pnl__agent_id__get
+      parameters:
+      - name: agent_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Agent Id
+      - name: hours
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 24
+          title: Hours
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+                title: Response Analytics Bot Pnl Api Admin Analytics Bot Pnl  Agent Id  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/analytics/throughput:
+    get:
+      tags:
+      - Admin
+      summary: Analytics Throughput
+      description: Hands/min throughput history from collector.
+      operationId: analytics_throughput_api_admin_analytics_throughput_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items: {}
+                type: array
+                title: Response Analytics Throughput Api Admin Analytics Throughput Get
+  /api/admin/alerts/rules:
+    get:
+      tags:
+      - Admin
+      summary: Alerts Rules
+      description: List all alert rules with current status.
+      operationId: alerts_rules_api_admin_alerts_rules_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items: {}
+                type: array
+                title: Response Alerts Rules Api Admin Alerts Rules Get
+  /api/admin/alerts/test:
+    post:
+      tags:
+      - Admin
+      summary: Alerts Test
+      description: Fire a test alert to all configured webhooks.
+      operationId: alerts_test_api_admin_alerts_test_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Alerts Test Api Admin Alerts Test Post
+  /api/admin/accounts:
+    get:
+      tags:
+      - Admin
+      summary: Admin Accounts
+      description: All registered accounts with balance, hands played, and live status.
+      operationId: admin_accounts_api_admin_accounts_get
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 500
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                title: Response Admin Accounts Api Admin Accounts Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/admin/config:
+    get:
+      tags:
+      - Admin
+      summary: Get Config
+      description: Return current reloadable config values with metadata.
+      operationId: get_config_api_admin_config_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Get Config Api Admin Config Get
+    patch:
+      tags:
+      - Admin
+      summary: Update Config
+      description: Update reloadable config values (hot-reload).
+      operationId: update_config_api_admin_config_patch
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Update Config Api Admin Config Patch
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

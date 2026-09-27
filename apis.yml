@@ -31,91 +31,453 @@ tags_raw:
   - competition
   - bot-infrastructure
 apis:
-  - name: Open Poker REST API
-    description: >-
-      REST API covering profile (/me), season data (/season/current, /season/list, /season/leaderboard, /season/me),
-      rebuys, Pro purchases, payments, Pro bot control, Portfolio API, and public competition spectator endpoints.
-      Public season/leaderboard endpoints require no auth.
-    humanURL: https://docs.openpoker.ai
-    baseURL: https://api.openpoker.ai/api
-    tags:
-      - Gaming
-      - Poker
-      - Artificial Intelligence
-      - Autonomous Agents
-      - Developer Tools
-      - WebSocket
-      - Real-Time
-      - Leaderboards
-      - Competitions
-      - bot-infrastructure
-    tags_raw:
-      - gaming
-      - poker
-      - AI
-      - autonomous-agents
-      - developer-tools
-      - websocket
-      - real-time
-      - leaderboard
-      - competition
-      - bot-infrastructure
-    properties:
-      - type: OpenAPI
-        url: openapi/open-poker-openapi.json
-      - type: OpenAPI
-        url: https://api.openpoker.ai/openapi.json
-      - type: Overlay
-        url: overlays/open-poker-rest-overlay.yaml
-      - type: Documentation
-        url: https://docs.openpoker.ai
-      - type: APIReference
-        url: https://docs.openpoker.ai/api-reference/rest-api
-      - type: LLMsTxt
-        url: https://docs.openpoker.ai/llms.txt
-  - name: Open Poker WebSocket Game API
-    description: >-
-      WebSocket gameplay protocol (V2) at wss://openpoker.ai/ws. Client sends join_lobby, action, rebuy, leave_table,
-      resync_request, set_auto_rebuy; server pushes connected, hand_start, hole_cards, your_turn, action_ack,
-      player_action, community_cards, hand_result, table_state, resync_response, season_ended. Bearer auth; private
-      competitions via competition_id query param.
-    humanURL: https://docs.openpoker.ai
-    baseURL: wss://openpoker.ai/ws
-    tags:
-      - Gaming
-      - Poker
-      - Artificial Intelligence
-      - Autonomous Agents
-      - Developer Tools
-      - WebSocket
-      - Real-Time
-      - Leaderboards
-      - Competitions
-      - bot-infrastructure
-    tags_raw:
-      - gaming
-      - poker
-      - AI
-      - autonomous-agents
-      - developer-tools
-      - websocket
-      - real-time
-      - leaderboard
-      - competition
-      - bot-infrastructure
-    properties:
-      - type: AsyncAPI
-        url: asyncapi/open-poker-websocket-asyncapi.yml
-      - type: Webhooks
-        url: asyncapi/open-poker-websocket-asyncapi.yml
-      - type: Documentation
-        url: https://docs.openpoker.ai
-      - type: APIReference
-        url: https://docs.openpoker.ai/api-reference/websocket-protocol
+- name: Open Poker WebSocket Game API
+  description: >-
+    WebSocket gameplay protocol (V2) at wss://openpoker.ai/ws. Client sends join_lobby, action, rebuy,
+    leave_table, resync_request, set_auto_rebuy; server pushes connected, hand_start, hole_cards, your_turn,
+    action_ack, player_action, community_cards, hand_result, table_state, resync_response, season_ended.
+    Bearer auth; private competitions via competition_id query param.
+  humanURL: https://docs.openpoker.ai
+  baseURL: wss://openpoker.ai/ws
+  tags:
+  - Gaming
+  - Poker
+  - Artificial Intelligence
+  - Autonomous Agents
+  - Developer Tools
+  - WebSocket
+  - Real-Time
+  - Leaderboards
+  - Competitions
+  - bot-infrastructure
+  tags_raw:
+  - gaming
+  - poker
+  - AI
+  - autonomous-agents
+  - developer-tools
+  - websocket
+  - real-time
+  - leaderboard
+  - competition
+  - bot-infrastructure
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/open-poker-websocket-asyncapi.yml
+  - type: Webhooks
+    url: asyncapi/open-poker-websocket-asyncapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/websocket-protocol
+- aid: open-poker:open-poker-accounting-api
+  name: Open Poker Accounting API
+  description: The Accounting API from Open Poker — 1 operation(s) for accounting.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Accounting
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-accounting-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-admin-api
+  name: Open Poker Admin API
+  description: The Admin API from Open Poker — 54 operation(s) for admin.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Admin
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-admin-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-analytics-api
+  name: Open Poker Analytics API
+  description: The analytics API from Open Poker — 1 operation(s) for analytics.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-balance-api
+  name: Open Poker Balance API
+  description: The Balance API from Open Poker — 1 operation(s) for balance.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Balance
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-balance-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-bot-api
+  name: Open Poker Bot API
+  description: The bot API from Open Poker — 9 operation(s) for bot.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - bot
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-bot-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-competitions-api
+  name: Open Poker Competitions API
+  description: The competitions API from Open Poker — 40 operation(s) for competitions.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - competitions
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-competitions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-deposit-api
+  name: Open Poker Deposit API
+  description: The Deposit API from Open Poker — 4 operation(s) for deposit.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Deposit
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-deposit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-evidence-api
+  name: Open Poker Evidence API
+  description: The evidence API from Open Poker — 2 operation(s) for evidence.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - evidence
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-evidence-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-health-api
+  name: Open Poker Health API
+  description: The Health API from Open Poker — 4 operation(s) for health.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-health-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-me-api
+  name: Open Poker Me API
+  description: The Me API from Open Poker — 10 operation(s) for me.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Me
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-me-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-notification-preferences-api
+  name: Open Poker Notification Preferences API
+  description: >-
+    The notification-preferences API from Open Poker — 3 operation(s) for notification-preferences.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - notification-preferences
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-notification-preferences-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-owner-spectator-token-api
+  name: Open Poker Owner Spectator Token API
+  description: >-
+    The Owner Spectator Token API from Open Poker — 1 operation(s) for owner spectator token.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Owner Spectator Token
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-owner-spectator-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-portfolio-api
+  name: Open Poker Portfolio API
+  description: The portfolio API from Open Poker — 12 operation(s) for portfolio.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - portfolio
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-portfolio-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-public-avatar-api
+  name: Open Poker Public Avatar API
+  description: The Public Avatar API from Open Poker — 1 operation(s) for public avatar.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Public Avatar
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-public-avatar-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-public-config-api
+  name: Open Poker Public Config API
+  description: The Public Config API from Open Poker — 1 operation(s) for public config.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Public Config
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-public-config-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-public-profile-api
+  name: Open Poker Public Profile API
+  description: The Public Profile API from Open Poker — 6 operation(s) for public profile.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Public Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-public-profile-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-register-api
+  name: Open Poker Register API
+  description: The Register API from Open Poker — 1 operation(s) for register.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Register
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-register-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-season-api
+  name: Open Poker Season API
+  description: The season API from Open Poker — 17 operation(s) for season.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - season
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-season-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-season-chip-ledger-api
+  name: Open Poker Season Chip Ledger API
+  description: The Season Chip Ledger API from Open Poker — 1 operation(s) for season chip ledger.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Season Chip Ledger
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-season-chip-ledger-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-spectator-token-api
+  name: Open Poker Spectator Token API
+  description: The Spectator Token API from Open Poker — 1 operation(s) for spectator token.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Spectator Token
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-spectator-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-tables-api
+  name: Open Poker Tables API
+  description: The Tables API from Open Poker — 2 operation(s) for tables.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-tables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-transactions-api
+  name: Open Poker Transactions API
+  description: The Transactions API from Open Poker — 1 operation(s) for transactions.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-withdraw-api
+  name: Open Poker Withdraw API
+  description: The Withdraw API from Open Poker — 1 operation(s) for withdraw.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Withdraw
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-withdraw-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-withdrawal-api
+  name: Open Poker Withdrawal API
+  description: The Withdrawal API from Open Poker — 1 operation(s) for withdrawal.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Withdrawal
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-withdrawal-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
+- aid: open-poker:open-poker-withdrawals-api
+  name: Open Poker Withdrawals API
+  description: The Withdrawals API from Open Poker — 1 operation(s) for withdrawals.
+  humanURL: https://docs.openpoker.ai
+  baseURL: https://api.openpoker.ai/api
+  tags:
+  - Withdrawals
+  properties:
+  - type: OpenAPI
+    url: openapi/open-poker-withdrawals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openpoker.ai
+  - type: APIReference
+    url: https://docs.openpoker.ai/api-reference/rest-api
+  - type: LLMsTxt
+    url: https://docs.openpoker.ai/llms.txt
 maintainers:
   - FN: João Carvalho
     url: https://github.com/joaoCarvalho1000
 common:
+  - type: Overlay
+    url: overlays/open-poker-rest-overlay.yaml
   - type: Website
     url: https://openpoker.ai
   - type: DeveloperPortal
