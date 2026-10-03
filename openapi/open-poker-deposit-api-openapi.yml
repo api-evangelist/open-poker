@@ -154,39 +154,6 @@ components:
       - msg
       - type
       title: ValidationError
-    UsdcClaimResponse:
-      properties:
-        transfer_id:
-          type: string
-          title: Transfer Id
-        tx_hash:
-          type: string
-          title: Tx Hash
-        log_index:
-          type: integer
-          title: Log Index
-        status:
-          type: string
-          title: Status
-        amount_cents:
-          type: integer
-          title: Amount Cents
-        confirmations_seen:
-          type: integer
-          title: Confirmations Seen
-        confirmations_required:
-          type: integer
-          title: Confirmations Required
-      type: object
-      required:
-      - transfer_id
-      - tx_hash
-      - log_index
-      - status
-      - amount_cents
-      - confirmations_seen
-      - confirmations_required
-      title: UsdcClaimResponse
     OnChainDepositResponse:
       properties:
         deposit_id:
@@ -220,15 +187,6 @@ components:
       - confirmations_seen
       - confirmations_required
       title: OnChainDepositResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     TransactionResponse:
       properties:
         transaction_id:
@@ -250,6 +208,48 @@ components:
       - amount
       - balance_after
       title: TransactionResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UsdcClaimResponse:
+      properties:
+        transfer_id:
+          type: string
+          title: Transfer Id
+        tx_hash:
+          type: string
+          title: Tx Hash
+        log_index:
+          type: integer
+          title: Log Index
+        status:
+          type: string
+          title: Status
+        amount_cents:
+          type: integer
+          title: Amount Cents
+        confirmations_seen:
+          type: integer
+          title: Confirmations Seen
+        confirmations_required:
+          type: integer
+          title: Confirmations Required
+      type: object
+      required:
+      - transfer_id
+      - tx_hash
+      - log_index
+      - status
+      - amount_cents
+      - confirmations_seen
+      - confirmations_required
+      title: UsdcClaimResponse
   securitySchemes:
     HTTPBearer:
       type: http

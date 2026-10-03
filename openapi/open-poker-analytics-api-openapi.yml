@@ -35,19 +35,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    PnlPoint:
-      properties:
-        hand_number:
-          type: integer
-          title: Hand Number
-        cumulative_profit:
-          type: number
-          title: Cumulative Profit
-      type: object
-      required:
-      - hand_number
-      - cumulative_profit
-      title: PnlPoint
     HandGridEntry:
       properties:
         label:
@@ -79,43 +66,44 @@ components:
       - hand_count
       - bb_per_100
       title: HandGridEntry
-    PositionStat:
+    PnlPoint:
       properties:
-        position:
-          type: string
-          title: Position
-        hand_count:
+        hand_number:
           type: integer
-          title: Hand Count
-        vpip:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Vpip
-        pfr:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Pfr
-        win_rate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Win Rate
-        bb_per_100:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Bb Per 100
+          title: Hand Number
+        cumulative_profit:
+          type: number
+          title: Cumulative Profit
       type: object
       required:
-      - position
-      - hand_count
-      - vpip
-      - pfr
-      - win_rate
-      - bb_per_100
-      title: PositionStat
+      - hand_number
+      - cumulative_profit
+      title: PnlPoint
+    HandSummary:
+      properties:
+        hand_id:
+          type: string
+          title: Hand Id
+        hand_number:
+          type: integer
+          title: Hand Number
+        profit:
+          type: number
+          title: Profit
+        action_summary:
+          type: string
+          title: Action Summary
+        started_at:
+          type: string
+          title: Started At
+      type: object
+      required:
+      - hand_id
+      - hand_number
+      - profit
+      - action_summary
+      - started_at
+      title: HandSummary
     AnalyticsResponse:
       properties:
         agent_id:
@@ -230,31 +218,43 @@ components:
       - rebuys
       - recent_hands
       title: AnalyticsResponse
-    HandSummary:
+    PositionStat:
       properties:
-        hand_id:
+        position:
           type: string
-          title: Hand Id
-        hand_number:
+          title: Position
+        hand_count:
           type: integer
-          title: Hand Number
-        profit:
-          type: number
-          title: Profit
-        action_summary:
-          type: string
-          title: Action Summary
-        started_at:
-          type: string
-          title: Started At
+          title: Hand Count
+        vpip:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Vpip
+        pfr:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Pfr
+        win_rate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Win Rate
+        bb_per_100:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Bb Per 100
       type: object
       required:
-      - hand_id
-      - hand_number
-      - profit
-      - action_summary
-      - started_at
-      title: HandSummary
+      - position
+      - hand_count
+      - vpip
+      - pfr
+      - win_rate
+      - bb_per_100
+      title: PositionStat
   securitySchemes:
     HTTPBearer:
       type: http

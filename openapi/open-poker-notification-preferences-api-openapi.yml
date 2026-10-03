@@ -120,20 +120,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    NotificationPreferencesResponse:
-      properties:
-        bot_inactivity_emails_enabled:
-          type: boolean
-          title: Bot Inactivity Emails Enabled
-        recipient_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Recipient Email
-      type: object
-      required:
-      - bot_inactivity_emails_enabled
-      title: NotificationPreferencesResponse
     ValidationError:
       properties:
         loc:
@@ -160,6 +146,20 @@ components:
       - msg
       - type
       title: ValidationError
+    NotificationPreferencesResponse:
+      properties:
+        bot_inactivity_emails_enabled:
+          type: boolean
+          title: Bot Inactivity Emails Enabled
+        recipient_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Recipient Email
+      type: object
+      required:
+      - bot_inactivity_emails_enabled
+      title: NotificationPreferencesResponse
     UnsubscribeRequest:
       properties:
         token:
@@ -171,15 +171,6 @@ components:
       required:
       - token
       title: UnsubscribeRequest
-    UpdateNotificationPreferencesRequest:
-      properties:
-        bot_inactivity_emails_enabled:
-          type: boolean
-          title: Bot Inactivity Emails Enabled
-      type: object
-      required:
-      - bot_inactivity_emails_enabled
-      title: UpdateNotificationPreferencesRequest
     HTTPValidationError:
       properties:
         detail:
@@ -189,6 +180,15 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    UpdateNotificationPreferencesRequest:
+      properties:
+        bot_inactivity_emails_enabled:
+          type: boolean
+          title: Bot Inactivity Emails Enabled
+      type: object
+      required:
+      - bot_inactivity_emails_enabled
+      title: UpdateNotificationPreferencesRequest
   securitySchemes:
     HTTPBearer:
       type: http

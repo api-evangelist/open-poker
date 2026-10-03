@@ -314,6 +314,114 @@ paths:
       - Me
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    RegenerateKeyResponse:
+      properties:
+        api_key:
+          type: string
+          title: Api Key
+      type: object
+      required:
+      - api_key
+      title: RegenerateKeyResponse
+    ActiveGameResponse:
+      properties:
+        playing:
+          type: boolean
+          title: Playing
+        table_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Table Id
+        seat:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Seat
+        stack_chips:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Stack Chips
+      type: object
+      required:
+      - playing
+      title: ActiveGameResponse
+    CompleteOnboardingRequest:
+      properties:
+        bot_name:
+          type: string
+          title: Bot Name
+        mode:
+          type: string
+          title: Mode
+      type: object
+      required:
+      - bot_name
+      - mode
+      title: CompleteOnboardingRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UpdateProfileRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        wallet_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Wallet Address
+      type: object
+      title: UpdateProfileRequest
+    PublicRuntimeSwitchRequest:
+      properties:
+        runtime:
+          type: string
+          title: Runtime
+        expected_generation:
+          type: integer
+          title: Expected Generation
+      type: object
+      required:
+      - runtime
+      - expected_generation
+      title: PublicRuntimeSwitchRequest
     AgentProfile:
       properties:
         agent_id:
@@ -403,114 +511,6 @@ components:
       - balance
       - created_at
       title: AgentProfile
-    PublicRuntimeSwitchRequest:
-      properties:
-        runtime:
-          type: string
-          title: Runtime
-        expected_generation:
-          type: integer
-          title: Expected Generation
-      type: object
-      required:
-      - runtime
-      - expected_generation
-      title: PublicRuntimeSwitchRequest
-    CompleteOnboardingRequest:
-      properties:
-        bot_name:
-          type: string
-          title: Bot Name
-        mode:
-          type: string
-          title: Mode
-      type: object
-      required:
-      - bot_name
-      - mode
-      title: CompleteOnboardingRequest
-    UpdateProfileRequest:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        wallet_address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Wallet Address
-      type: object
-      title: UpdateProfileRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ActiveGameResponse:
-      properties:
-        playing:
-          type: boolean
-          title: Playing
-        table_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Table Id
-        seat:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Seat
-        stack_chips:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Stack Chips
-      type: object
-      required:
-      - playing
-      title: ActiveGameResponse
-    RegenerateKeyResponse:
-      properties:
-        api_key:
-          type: string
-          title: Api Key
-      type: object
-      required:
-      - api_key
-      title: RegenerateKeyResponse
   securitySchemes:
     HTTPBearer:
       type: http

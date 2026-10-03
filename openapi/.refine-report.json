@@ -1,7 +1,7 @@
 {
   "provider": "open-poker",
   "sources": [
-    "open-poker-openapi.json"
+    "_original/open-poker-openapi.json"
   ],
   "outputs": [
     "open-poker-accounting-api-openapi.yml",
@@ -30,12 +30,11 @@
     "open-poker-portfolio-api-openapi.yml",
     "open-poker-season-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/open-poker-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "open-poker-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "open-poker-openapi.json: tagged paths POST /api/register -> Register",
     "open-poker-openapi.json: tagged paths GET /api/me -> Me",
@@ -109,7 +108,33 @@
     "open-poker-openapi.json: declared missing tag: notification-preferences",
     "open-poker-openapi.json: declared missing tag: portfolio",
     "open-poker-openapi.json: declared missing tag: season",
-    "apis.yml register: written (+25 apis, 26 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "open-poker-accounting-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-admin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-analytics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-balance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-bot-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-competitions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-deposit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-evidence-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-me-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-notification-preferences-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-owner-spectator-token-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-portfolio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-public-avatar-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-public-config-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-public-profile-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-register-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-season-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-season-chip-ledger-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-spectator-token-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-tables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-withdraw-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-withdrawal-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "open-poker-withdrawals-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
