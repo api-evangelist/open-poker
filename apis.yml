@@ -108,6 +108,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Analytics
+  tags_raw:
   - analytics
   properties:
   - type: OpenAPI
@@ -124,6 +126,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Balances
+  tags_raw:
   - Balance
   properties:
   - type: OpenAPI
@@ -140,6 +144,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Bot
+  tags_raw:
   - bot
   properties:
   - type: OpenAPI
@@ -156,6 +162,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Competitions
+  tags_raw:
   - competitions
   properties:
   - type: OpenAPI
@@ -188,6 +196,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Evidence
+  tags_raw:
   - evidence
   properties:
   - type: OpenAPI
@@ -237,6 +247,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Notification Preferences
+  tags_raw:
   - notification-preferences
   properties:
   - type: OpenAPI
@@ -270,6 +282,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Portfolio
+  tags_raw:
   - portfolio
   properties:
   - type: OpenAPI
@@ -350,6 +364,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Season
+  tags_raw:
   - season
   properties:
   - type: OpenAPI
@@ -414,6 +430,8 @@ apis:
   humanURL: https://docs.openpoker.ai
   baseURL: https://api.openpoker.ai/api
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
