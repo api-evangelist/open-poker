@@ -120,6 +120,49 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UnsubscribeRequest:
+      properties:
+        token:
+          type: string
+          maxLength: 2048
+          minLength: 20
+          title: Token
+      type: object
+      required:
+      - token
+      title: UnsubscribeRequest
+    NotificationPreferencesResponse:
+      properties:
+        bot_inactivity_emails_enabled:
+          type: boolean
+          title: Bot Inactivity Emails Enabled
+        recipient_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Recipient Email
+      type: object
+      required:
+      - bot_inactivity_emails_enabled
+      title: NotificationPreferencesResponse
+    UpdateNotificationPreferencesRequest:
+      properties:
+        bot_inactivity_emails_enabled:
+          type: boolean
+          title: Bot Inactivity Emails Enabled
+      type: object
+      required:
+      - bot_inactivity_emails_enabled
+      title: UpdateNotificationPreferencesRequest
     ValidationError:
       properties:
         loc:
@@ -146,49 +189,6 @@ components:
       - msg
       - type
       title: ValidationError
-    NotificationPreferencesResponse:
-      properties:
-        bot_inactivity_emails_enabled:
-          type: boolean
-          title: Bot Inactivity Emails Enabled
-        recipient_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Recipient Email
-      type: object
-      required:
-      - bot_inactivity_emails_enabled
-      title: NotificationPreferencesResponse
-    UnsubscribeRequest:
-      properties:
-        token:
-          type: string
-          maxLength: 2048
-          minLength: 20
-          title: Token
-      type: object
-      required:
-      - token
-      title: UnsubscribeRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    UpdateNotificationPreferencesRequest:
-      properties:
-        bot_inactivity_emails_enabled:
-          type: boolean
-          title: Bot Inactivity Emails Enabled
-      type: object
-      required:
-      - bot_inactivity_emails_enabled
-      title: UpdateNotificationPreferencesRequest
   securitySchemes:
     HTTPBearer:
       type: http

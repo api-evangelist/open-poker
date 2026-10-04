@@ -1661,73 +1661,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ConfirmRulesRequest:
-      properties:
-        expected_rules_version:
-          type: integer
-          minimum: 1.0
-          title: Expected Rules Version
-      additionalProperties: false
-      type: object
-      required:
-      - expected_rules_version
-      title: ConfirmRulesRequest
-    ReasonRequest:
-      properties:
-        reason:
-          type: string
-          maxLength: 1000
-          minLength: 3
-          title: Reason
-      additionalProperties: false
-      type: object
-      required:
-      - reason
-      title: ReasonRequest
-    InviteLinkRequest:
-      properties:
-        max_uses:
-          type: integer
-          maximum: 100.0
-          minimum: 1.0
-          title: Max Uses
-        expires_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Expires At
-      additionalProperties: false
-      type: object
-      required:
-      - max_uses
-      title: InviteLinkRequest
     CompetitionMetadataResponse:
       properties:
         participant_cap:
@@ -1756,75 +1689,6 @@ components:
       - schedule
       - rules
       title: CompetitionMetadataResponse
-    InvitePeopleRequest:
-      properties:
-        emails:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Emails
-      additionalProperties: false
-      type: object
-      required:
-      - emails
-      title: InvitePeopleRequest
-    RewardStatusRequest:
-      properties:
-        reward_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Reward Id
-        entry_id:
-          type: string
-          format: uuid
-          title: Entry Id
-        label:
-          type: string
-          maxLength: 120
-          minLength: 1
-          title: Label
-        value_text:
-          anyOf:
-          - type: string
-            maxLength: 2000
-          - type: 'null'
-          title: Value Text
-        status:
-          type: string
-          enum:
-          - pending
-          - delivered
-          - failed
-          - not_applicable
-          title: Status
-        notes:
-          anyOf:
-          - type: string
-            maxLength: 4000
-          - type: 'null'
-          title: Notes
-        failure_reason:
-          anyOf:
-          - type: string
-            maxLength: 4000
-          - type: 'null'
-          title: Failure Reason
-        expected_version:
-          anyOf:
-          - type: integer
-            minimum: 1.0
-          - type: 'null'
-          title: Expected Version
-      additionalProperties: false
-      type: object
-      required:
-      - entry_id
-      - label
-      - status
-      title: RewardStatusRequest
     HTTPValidationError:
       properties:
         detail:
@@ -1834,29 +1698,18 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    AcceptInvitationRequest:
-      properties:
-        display_name:
-          anyOf:
-          - type: string
-            maxLength: 64
-            minLength: 3
-          - type: 'null'
-          title: Display Name
-      additionalProperties: false
-      type: object
-      title: AcceptInvitationRequest
-    OptionalReasonRequest:
+    ReasonRequest:
       properties:
         reason:
-          anyOf:
-          - type: string
-            maxLength: 1000
-          - type: 'null'
+          type: string
+          maxLength: 1000
+          minLength: 3
           title: Reason
       additionalProperties: false
       type: object
-      title: OptionalReasonRequest
+      required:
+      - reason
+      title: ReasonRequest
     CompetitionCreateRequest:
       properties:
         name:
@@ -1964,6 +1817,71 @@ components:
       - starts_at
       - ends_at
       title: CompetitionCreateRequest
+    InvitePeopleRequest:
+      properties:
+        emails:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Emails
+      additionalProperties: false
+      type: object
+      required:
+      - emails
+      title: InvitePeopleRequest
+    InviteLinkRequest:
+      properties:
+        max_uses:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Max Uses
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+      additionalProperties: false
+      type: object
+      required:
+      - max_uses
+      title: InviteLinkRequest
+    OptionalReasonRequest:
+      properties:
+        reason:
+          anyOf:
+          - type: string
+            maxLength: 1000
+          - type: 'null'
+          title: Reason
+      additionalProperties: false
+      type: object
+      title: OptionalReasonRequest
+    AcceptInvitationRequest:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+            maxLength: 64
+            minLength: 3
+          - type: 'null'
+          title: Display Name
+      additionalProperties: false
+      type: object
+      title: AcceptInvitationRequest
+    ConfirmRulesRequest:
+      properties:
+        expected_rules_version:
+          type: integer
+          minimum: 1.0
+          title: Expected Rules Version
+      additionalProperties: false
+      type: object
+      required:
+      - expected_rules_version
+      title: ConfirmRulesRequest
     CompetitionUpdateRequest:
       properties:
         name:
@@ -2089,6 +2007,88 @@ components:
       additionalProperties: false
       type: object
       title: CompetitionUpdateRequest
+    RewardStatusRequest:
+      properties:
+        reward_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Reward Id
+        entry_id:
+          type: string
+          format: uuid
+          title: Entry Id
+        label:
+          type: string
+          maxLength: 120
+          minLength: 1
+          title: Label
+        value_text:
+          anyOf:
+          - type: string
+            maxLength: 2000
+          - type: 'null'
+          title: Value Text
+        status:
+          type: string
+          enum:
+          - pending
+          - delivered
+          - failed
+          - not_applicable
+          title: Status
+        notes:
+          anyOf:
+          - type: string
+            maxLength: 4000
+          - type: 'null'
+          title: Notes
+        failure_reason:
+          anyOf:
+          - type: string
+            maxLength: 4000
+          - type: 'null'
+          title: Failure Reason
+        expected_version:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: Expected Version
+      additionalProperties: false
+      type: object
+      required:
+      - entry_id
+      - label
+      - status
+      title: RewardStatusRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

@@ -128,65 +128,15 @@ paths:
       - Deposit
 components:
   schemas:
-    ValidationError:
+    HTTPValidationError:
       properties:
-        loc:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Detail
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    OnChainDepositResponse:
-      properties:
-        deposit_id:
-          type: string
-          title: Deposit Id
-        tx_hash:
-          type: string
-          title: Tx Hash
-        status:
-          type: string
-          title: Status
-        amount_cents:
-          type: integer
-          title: Amount Cents
-        amount_ucents:
-          type: integer
-          title: Amount Ucents
-        confirmations_seen:
-          type: integer
-          title: Confirmations Seen
-        confirmations_required:
-          type: integer
-          title: Confirmations Required
-      type: object
-      required:
-      - deposit_id
-      - tx_hash
-      - status
-      - amount_cents
-      - amount_ucents
-      - confirmations_seen
-      - confirmations_required
-      title: OnChainDepositResponse
+      title: HTTPValidationError
     TransactionResponse:
       properties:
         transaction_id:
@@ -208,15 +158,6 @@ components:
       - amount
       - balance_after
       title: TransactionResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     UsdcClaimResponse:
       properties:
         transfer_id:
@@ -250,6 +191,65 @@ components:
       - confirmations_seen
       - confirmations_required
       title: UsdcClaimResponse
+    OnChainDepositResponse:
+      properties:
+        deposit_id:
+          type: string
+          title: Deposit Id
+        tx_hash:
+          type: string
+          title: Tx Hash
+        status:
+          type: string
+          title: Status
+        amount_cents:
+          type: integer
+          title: Amount Cents
+        amount_ucents:
+          type: integer
+          title: Amount Ucents
+        confirmations_seen:
+          type: integer
+          title: Confirmations Seen
+        confirmations_required:
+          type: integer
+          title: Confirmations Required
+      type: object
+      required:
+      - deposit_id
+      - tx_hash
+      - status
+      - amount_cents
+      - amount_ucents
+      - confirmations_seen
+      - confirmations_required
+      title: OnChainDepositResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http
