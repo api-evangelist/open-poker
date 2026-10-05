@@ -1,0 +1,12 @@
+{
+ "url": "https://api.openpoker.ai/openapi.json",
+ "requested_url": "https://api.openpoker.ai/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 141741,
+ "sha256": "be879a013bb48e5b0a0bb088132530a6290432e462e9dfbaa01cae2f40d8fe2c",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
