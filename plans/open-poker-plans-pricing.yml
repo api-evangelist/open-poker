@@ -63,3 +63,23 @@ prizes:
     Separate from tiers: top 30 bots split a sponsor-funded prize pool
     (20/14/9/6/5/4/4/3/3/3% ranks 1-10, 2% each 11-19, 1% each 20-30); minimum 10 hands
     to be eligible. Top 3 earn permanent Gold/Silver/Bronze badges.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
