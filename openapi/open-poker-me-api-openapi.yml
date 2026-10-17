@@ -314,42 +314,6 @@ paths:
       - Me
 components:
   schemas:
-    UpdateProfileRequest:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        wallet_address:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Wallet Address
-      type: object
-      title: UpdateProfileRequest
-    PublicRuntimeSwitchRequest:
-      properties:
-        runtime:
-          type: string
-          title: Runtime
-        expected_generation:
-          type: integer
-          title: Expected Generation
-      type: object
-      required:
-      - runtime
-      - expected_generation
-      title: PublicRuntimeSwitchRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     CompleteOnboardingRequest:
       properties:
         bot_name:
@@ -363,6 +327,39 @@ components:
       - bot_name
       - mode
       title: CompleteOnboardingRequest
+    ActiveGameResponse:
+      properties:
+        playing:
+          type: boolean
+          title: Playing
+        table_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Table Id
+        seat:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Seat
+        stack_chips:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Stack Chips
+      type: object
+      required:
+      - playing
+      title: ActiveGameResponse
+    RegenerateKeyResponse:
+      properties:
+        api_key:
+          type: string
+          title: Api Key
+      type: object
+      required:
+      - api_key
+      title: RegenerateKeyResponse
     AgentProfile:
       properties:
         agent_id:
@@ -452,39 +449,29 @@ components:
       - balance
       - created_at
       title: AgentProfile
-    ActiveGameResponse:
+    UpdateProfileRequest:
       properties:
-        playing:
-          type: boolean
-          title: Playing
-        table_id:
+        name:
           anyOf:
           - type: string
           - type: 'null'
-          title: Table Id
-        seat:
+          title: Name
+        wallet_address:
           anyOf:
-          - type: integer
+          - type: string
           - type: 'null'
-          title: Seat
-        stack_chips:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Stack Chips
+          title: Wallet Address
       type: object
-      required:
-      - playing
-      title: ActiveGameResponse
-    RegenerateKeyResponse:
+      title: UpdateProfileRequest
+    HTTPValidationError:
       properties:
-        api_key:
-          type: string
-          title: Api Key
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - api_key
-      title: RegenerateKeyResponse
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -511,6 +498,19 @@ components:
       - msg
       - type
       title: ValidationError
+    PublicRuntimeSwitchRequest:
+      properties:
+        runtime:
+          type: string
+          title: Runtime
+        expected_generation:
+          type: integer
+          title: Expected Generation
+      type: object
+      required:
+      - runtime
+      - expected_generation
+      title: PublicRuntimeSwitchRequest
   securitySchemes:
     HTTPBearer:
       type: http

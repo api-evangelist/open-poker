@@ -433,29 +433,43 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    PortfolioResponse:
+    PositionStat:
       properties:
-        owner_id:
+        position:
           type: string
-          title: Owner Id
-        pro:
-          type: boolean
-          title: Pro
-        max_bots:
+          title: Position
+        hand_count:
           type: integer
-          title: Max Bots
-        bots:
-          items:
-            $ref: '#/components/schemas/PortfolioBotResponse'
-          type: array
-          title: Bots
+          title: Hand Count
+        vpip:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Vpip
+        pfr:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Pfr
+        win_rate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Win Rate
+        bb_per_100:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Bb Per 100
       type: object
       required:
-      - owner_id
-      - pro
-      - max_bots
-      - bots
-      title: PortfolioResponse
+      - position
+      - hand_count
+      - vpip
+      - pfr
+      - win_rate
+      - bb_per_100
+      title: PositionStat
     AnalyticsResponse:
       properties:
         agent_id:
@@ -570,6 +584,55 @@ components:
       - rebuys
       - recent_hands
       title: AnalyticsResponse
+    PortfolioResponse:
+      properties:
+        owner_id:
+          type: string
+          title: Owner Id
+        pro:
+          type: boolean
+          title: Pro
+        max_bots:
+          type: integer
+          title: Max Bots
+        bots:
+          items:
+            $ref: '#/components/schemas/PortfolioBotResponse'
+          type: array
+          title: Bots
+      type: object
+      required:
+      - owner_id
+      - pro
+      - max_bots
+      - bots
+      title: PortfolioResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     RegeneratePortfolioKeyResponse:
       properties:
         api_key:
@@ -579,177 +642,6 @@ components:
       required:
       - api_key
       title: RegeneratePortfolioKeyResponse
-    HandSummary:
-      properties:
-        hand_id:
-          type: string
-          title: Hand Id
-        hand_number:
-          type: integer
-          title: Hand Number
-        profit:
-          type: number
-          title: Profit
-        action_summary:
-          type: string
-          title: Action Summary
-        started_at:
-          type: string
-          title: Started At
-      type: object
-      required:
-      - hand_id
-      - hand_number
-      - profit
-      - action_summary
-      - started_at
-      title: HandSummary
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    PnlPoint:
-      properties:
-        hand_number:
-          type: integer
-          title: Hand Number
-        cumulative_profit:
-          type: number
-          title: Cumulative Profit
-      type: object
-      required:
-      - hand_number
-      - cumulative_profit
-      title: PnlPoint
-    HandGridEntry:
-      properties:
-        label:
-          type: string
-          title: Label
-        rank1:
-          type: string
-          title: Rank1
-        rank2:
-          type: string
-          title: Rank2
-        suited:
-          type: boolean
-          title: Suited
-        hand_count:
-          type: integer
-          title: Hand Count
-        bb_per_100:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Bb Per 100
-      type: object
-      required:
-      - label
-      - rank1
-      - rank2
-      - suited
-      - hand_count
-      - bb_per_100
-      title: HandGridEntry
-    PositionStat:
-      properties:
-        position:
-          type: string
-          title: Position
-        hand_count:
-          type: integer
-          title: Hand Count
-        vpip:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Vpip
-        pfr:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Pfr
-        win_rate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Win Rate
-        bb_per_100:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Bb Per 100
-      type: object
-      required:
-      - position
-      - hand_count
-      - vpip
-      - pfr
-      - win_rate
-      - bb_per_100
-      title: PositionStat
-    SwitchPortfolioRuntimeRequest:
-      properties:
-        runtime:
-          type: string
-          enum:
-          - self_hosted
-          - browser
-          - hosted
-          - stopped
-          title: Runtime
-        expected_generation:
-          type: integer
-          title: Expected Generation
-      type: object
-      required:
-      - runtime
-      - expected_generation
-      title: SwitchPortfolioRuntimeRequest
-    PortfolioBotResponse:
-      properties:
-        agent_id:
-          type: string
-          title: Agent Id
-        name:
-          type: string
-          title: Name
-        role:
-          type: string
-          title: Role
-        slot:
-          type: integer
-          title: Slot
-        status:
-          type: string
-          title: Status
-        api_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Api Key
-        desired_public_runtime:
-          type: string
-          title: Desired Public Runtime
-        runtime_generation:
-          type: integer
-          title: Runtime Generation
-      type: object
-      required:
-      - agent_id
-      - name
-      - role
-      - slot
-      - status
-      - desired_public_runtime
-      - runtime_generation
-      title: PortfolioBotResponse
     PortfolioSeasonEntryResponse:
       properties:
         season_id:
@@ -826,32 +718,140 @@ components:
       - auto_rebuy
       - score
       title: PortfolioSeasonEntryResponse
-    ValidationError:
+    PnlPoint:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+        hand_number:
+          type: integer
+          title: Hand Number
+        cumulative_profit:
+          type: number
+          title: Cumulative Profit
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - hand_number
+      - cumulative_profit
+      title: PnlPoint
+    SwitchPortfolioRuntimeRequest:
+      properties:
+        runtime:
+          type: string
+          enum:
+          - self_hosted
+          - browser
+          - hosted
+          - stopped
+          title: Runtime
+        expected_generation:
+          type: integer
+          title: Expected Generation
+      type: object
+      required:
+      - runtime
+      - expected_generation
+      title: SwitchPortfolioRuntimeRequest
+    HandGridEntry:
+      properties:
+        label:
+          type: string
+          title: Label
+        rank1:
+          type: string
+          title: Rank1
+        rank2:
+          type: string
+          title: Rank2
+        suited:
+          type: boolean
+          title: Suited
+        hand_count:
+          type: integer
+          title: Hand Count
+        bb_per_100:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Bb Per 100
+      type: object
+      required:
+      - label
+      - rank1
+      - rank2
+      - suited
+      - hand_count
+      - bb_per_100
+      title: HandGridEntry
+    HandSummary:
+      properties:
+        hand_id:
+          type: string
+          title: Hand Id
+        hand_number:
+          type: integer
+          title: Hand Number
+        profit:
+          type: number
+          title: Profit
+        action_summary:
+          type: string
+          title: Action Summary
+        started_at:
+          type: string
+          title: Started At
+      type: object
+      required:
+      - hand_id
+      - hand_number
+      - profit
+      - action_summary
+      - started_at
+      title: HandSummary
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PortfolioBotResponse:
+      properties:
+        agent_id:
+          type: string
+          title: Agent Id
+        name:
+          type: string
+          title: Name
+        role:
+          type: string
+          title: Role
+        slot:
+          type: integer
+          title: Slot
+        status:
+          type: string
+          title: Status
+        api_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Key
+        desired_public_runtime:
+          type: string
+          title: Desired Public Runtime
+        runtime_generation:
+          type: integer
+          title: Runtime Generation
+      type: object
+      required:
+      - agent_id
+      - name
+      - role
+      - slot
+      - status
+      - desired_public_runtime
+      - runtime_generation
+      title: PortfolioBotResponse
   securitySchemes:
     HTTPBearer:
       type: http

@@ -128,36 +128,6 @@ paths:
       - Deposit
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TransactionResponse:
-      properties:
-        transaction_id:
-          type: string
-          title: Transaction Id
-        type:
-          type: string
-          title: Type
-        amount:
-          type: number
-          title: Amount
-        balance_after:
-          type: number
-          title: Balance After
-      type: object
-      required:
-      - transaction_id
-      - type
-      - amount
-      - balance_after
-      title: TransactionResponse
     UsdcClaimResponse:
       properties:
         transfer_id:
@@ -224,6 +194,15 @@ components:
       - confirmations_seen
       - confirmations_required
       title: OnChainDepositResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -250,6 +229,27 @@ components:
       - msg
       - type
       title: ValidationError
+    TransactionResponse:
+      properties:
+        transaction_id:
+          type: string
+          title: Transaction Id
+        type:
+          type: string
+          title: Type
+        amount:
+          type: number
+          title: Amount
+        balance_after:
+          type: number
+          title: Balance After
+      type: object
+      required:
+      - transaction_id
+      - type
+      - amount
+      - balance_after
+      title: TransactionResponse
   securitySchemes:
     HTTPBearer:
       type: http
